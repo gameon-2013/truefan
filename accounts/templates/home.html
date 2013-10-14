@@ -1,0 +1,6 @@
+{%extends "index.html"%}
+{%block content%}
+	<h1>Home</h1>
+	<p>Welcome {{request.session.username}}  to TrueFan</p>
+	<a href = "logout">Logout</a>
+{%endblock%}

@@ -1,16 +1,16 @@
 from django.conf.urls import patterns, include, url
+from views import *
 
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
 # admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'', include('accounts.urls'))
- #    url(r'^$', index),
-	# url(r'^register',registration),	
-	# url(r'^home', home),
- #    url(r'^login', login),
- #    url(r'^logout', logout),
+    url(r'^$', index),
+	url(r'^register',registration),	
+	url(r'^home', home),
+    url(r'^login', login),
+    url(r'^logout', logout),
     # Examples:
     # url(r'^$', 'truefan.views.home', name='home'),
     # url(r'^truefan/', include('truefan.foo.urls')),

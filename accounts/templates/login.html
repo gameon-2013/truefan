@@ -1,0 +1,14 @@
+{%extends "index.html"%}
+{%block content%}
+	<p>Login</p>
+	<div>
+		<form action = "login" method = "POST">
+			<p style = "color:red"> {{error}}</p>
+			<table>
+				{{form.as_table}}
+			</table>
+			</br>
+			<p><input type = "submit" value = "Login" name = "login"></p>
+		</form>
+	</div>
+{%endblock%}
