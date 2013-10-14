@@ -31,7 +31,7 @@ def registration(request):
 				return render_to_response('registration.html', {'error' : error, 'form' : form}, context_instance = RequestContext(request))
 
 			#create user object then save it
-			user = User.objects.create_user(username = username, password = password, email = email, firstname=firstname, lastname = lastname)
+			user = User.objects.create_user(username = username, password = password, email = email, first_name=firstname, last_name = lastname)
 			user = user.save()
 			user = User.objects.get(username = username)
 
