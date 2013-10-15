@@ -3,3 +3,4 @@ venv
 *.py~
 staticfiles
 .DS_Store
+TrueFandb
