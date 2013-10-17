@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Timeline</title>
+</head>
+<body>
+<div align="right" style="margin-right: 200px">
+	<button><a href="{{ login_url }}" style="text-decoration:none" >Logout</a></button>
+</div>
+<h1>True Fan - User's Timeline Tweets</h1>
+{% if tweets %}
+	<ul>
+	{% for tweet in tweets %}
+		<li> {{ tweet }} </li>
+	{% endfor %}
+	</ul>
+{% else %}
+	<p>No tweets are available. </p>
+{% endif %}
+
+</body>
+</html>
