@@ -41,3 +41,8 @@ class CompiledRegex(models.Model):
     def __unicode__(self):
         ''' shows the compiled regex's original regex when printing the object '''
         return self.regex
+
+    @classmethod
+    def latest(self):
+        ''' returns the most recent compiled regex '''
+        return CompiledRegex.objects.order_by('-date_compiled')[0]
