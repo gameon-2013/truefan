@@ -6,6 +6,8 @@ from views import *
 # admin.autodiscover()
 
 urlpatterns = patterns('',
+    url(r'^regex/keywords/$', keywords, name="keywords"),
+    url(r'^regex/match/$', test_match, name="match"), 
     # Examples:
     # url(r'^$', 'truefan.views.home', name='home'),
     # url(r'^truefan/', include('truefan.foo.urls')),

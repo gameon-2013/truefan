@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Keywords{% endblock title %}
+
+{% block body %}
+<ul>
+    {% for keyword in keywords %}
+	<li>{{ keyword.value }}</li>
+	{% endfor %}
+</ul>
+<form action="{% url 'keywords' %}" method="POST">
+	<p>{{ form.non_field_errors }}</p>
+	<div class="form-control">
+		{{ form.value.errors }}
+		<label for="id_value">Keyword</label>
+		{{ form.value }}
+	</div>
+	<div class="form-actions">
+		<button type="submit">Add</button>
+	</div>
+</form>
+{% endblock body %}

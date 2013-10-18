@@ -7,6 +7,7 @@ from django.conf.urls import patterns, include, url
 urlpatterns = patterns('',
     #url(r'', include('accounts.urls')),
     url(r'', include('twyauth.urls')),
+    url(r'', include('regex.urls')),
  #    url(r'^$', index),
 	# url(r'^register',registration),	
 	# url(r'^home', home),

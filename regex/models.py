@@ -23,9 +23,13 @@ class Keyword(models.Model):
         return self.value
 
 class CompiledRegex(models.Model):
-    value = models.TextField()
     regex = models.TextField()
     date_compiled = models.DateTimeField(auto_now=True)
+
+    def __get_compiled_regex(self):
+        return re.compile(self.regex)
+
+    value = property(__get_compiled_regex)
 
     @classmethod
     def recompile(self):
@@ -45,4 +49,16 @@ class CompiledRegex(models.Model):
     @classmethod
     def latest(self):
         ''' returns the most recent compiled regex '''
-        return CompiledRegex.objects.order_by('-date_compiled')[0]
+        recent = None
+        try:
+            recent = CompiledRegex.objects.order_by('-date_compiled')[0]
+        except IndexError:
+            pass
+
+        return recent
+
+    @classmethod
+    def match(self, sample):
+        ''' returns a list of words that match the regex in the sample '''
+        latest = CompiledRegex.latest()
+        return latest.value.findall(sample)

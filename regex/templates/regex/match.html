@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Match Something{% endblock title %}
+
+{% block body %}
+<ul>
+    {% for result in results %}
+		<li>{{ result }}</li>
+	{% endfor %}
+</ul>
+<form action="{% url 'match' %}" method="POST">
+	<p>{{ form.non_field_errors }}</p>
+	<div class="form-control">
+		{{ form.sample.errors }}
+		<label for="id_sample">Sample</label>
+		{{ form.sample }}
+	</div>
+	<div class="form-actions">
+		<button type="submit">Match</button>
+	</div>
+</form>
+{% endblock body %}
