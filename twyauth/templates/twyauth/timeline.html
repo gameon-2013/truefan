@@ -1,9 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>User Timeline</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block title %}User Timeline{% endblock title %}
+
+{% block body %}
 <div align="right" style="margin-right: 200px">
 	<button><a href="{{ login_url }}" style="text-decoration:none" >Logout</a></button>
 </div>
@@ -17,6 +16,4 @@
 {% else %}
 	<p>No tweets are available. </p>
 {% endif %}
-
-</body>
-</html>
+{% endblock body %}

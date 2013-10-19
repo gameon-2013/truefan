@@ -5,7 +5,6 @@ from django.conf.urls import patterns, include, url
 # admin.autodiscover()
 
 urlpatterns = patterns('',
-    #url(r'', include('accounts.urls')),
     url(r'', include('twyauth.urls')),
     url(r'', include('regex.urls')),
  #    url(r'^$', index),
