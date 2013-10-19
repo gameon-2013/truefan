@@ -1,6 +1,7 @@
 venv
 *.pyc
 *.py~
+*.idea
 staticfiles
 .DS_Store
 TrueFandb

@@ -51,15 +51,17 @@ def thanks(request):
 
     # Retrieve the tokens we want...
     authorized_tokens = twitter.get_authorized_tokens(request.GET['oauth_verifier'])
+    request.session['final_token'] = authorized_tokens
 
     # If they already exist, grab them, login and redirect to a page displaying stuff.
     try:
         user = User.objects.get(username=authorized_tokens['screen_name'])
     except User.DoesNotExist:
         # mock a user creation here; no email, password is just the token, etc.
-        user = User.objects.create_user(authorized_tokens['screen_name'], "<<email here>>", authorized_tokens['oauth_token_secret'])
+        user = User.objects.create_user(authorized_tokens['screen_name'], None, authorized_tokens['oauth_token_secret'])
         profile = TwitterProfile()
         profile.user = user
+        profile.twitter_userid = authorized_tokens['user_id']
         profile.oauth_token = authorized_tokens['oauth_token']
         profile.oauth_secret = authorized_tokens['oauth_token_secret']
         profile.save()
@@ -78,20 +80,66 @@ def thanks(request):
             #disabled/invalid A/C
             print "A/C not active"
     else:
-        return HttpResponse("invalid login msg")
-        #invalid login msg
+        phase2_auth(request, authorized_tokens)
 
     return HttpResponseRedirect(twyauth.LOGIN_REDIRECT_URL)
+
+from pprint import pprint
+def phase2_auth(request, authorized_tokens):
+    user = User.objects.get(username=authorized_tokens['screen_name'])
+
+    if user is not None:
+        user.set_password(authorized_tokens['oauth_token_secret'])
+        user.save()
+        #profile = TwitterProfile.objects.filter(twitter_userid_exact=authorized_tokens['user_id'])
+        profile = TwitterProfile.objects.get(twitter_userid=authorized_tokens['user_id'])
+        profile.oauth_token = authorized_tokens['oauth_token']
+        profile.oauth_secret = authorized_tokens['oauth_token_secret']
+        profile.save()
+
+        #authenticate & login
+        user = authenticate(
+            username=authorized_tokens['screen_name'],
+            password=authorized_tokens['oauth_token_secret']
+        )
+
+        if user is None and user.is_active:
+            login(request, user)
+
 
 
 def user_timeline(request):
     """An example view with Twython/OAuth hooks/calls to fetch data about the user in question."""
-    import json
-    user = request.user.twitterprofile
+
+    if not request.user.is_authenticated():
+        login_url = request.build_absolute_uri(reverse("twyauth.views.begin_auth"))
+        return HttpResponseRedirect(login_url)
+
+    try:
+        user = request.user.twitterprofile
+        user.oauth_token = request.session['final_token']['oauth_token']
+        user.oauth_secret = request.session['final_token']['oauth_token_secret']
+        user.set_password(request.session['final_token']['oauth_token_secret'])
+        user.save()
+    except Exception as ex:
+        ex.message
+
     tweets = []
     twitter = Twython(twyauth.TWITTER_KEY, twyauth.TWITTER_SECRET,
                       user.oauth_token, user.oauth_secret)
-    user_tweets = twitter.get_user_timeline()
-    for dTweet in user_tweets:
-        tweets.append(dTweet['text'])
-    return render_to_response('twyauth/timeline.html', {'tweets':tweets, 'login_url': twyauth.LOGOUT_URL,})
+
+    from twython import TwythonAuthError
+    from pprint import pprint
+    try:
+        user_tweets = twitter.get_user_timeline()
+        for dTweet in user_tweets:
+            tweets.append(dTweet['text'])
+        return render_to_response('twyauth/timeline.html', {'tweets':tweets, 'login_url': twyauth.LOGOUT_URL,})
+    except TwythonAuthError as ex:
+        #invalid tokens...get new tokens
+        if ex.error_code == 401:
+            logout_url = request.build_absolute_uri(reverse("twyauth.views.logout"))
+            return HttpResponseRedirect(logout_url)
+            #return HttpResponse("something's wrong: <br/> %s" % ex.message)
+        else:
+            return HttpResponse("something's wrong: <br/>%s" % ex.message)
