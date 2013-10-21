@@ -1,9 +1,15 @@
 {% extends 'base.html' %}
 
 {% block title %}True Fan{% endblock title %}
-
+{% block styles %}
+    <style>
+    .login { margin-left: auto; margin-right: auto; width: 50%; text-align: center;}
+    </style>
+{% endblock %}
 {% block body %}
-<h1 align="center">Welcome to True Fan Homepage</h1> <br /> <br />
-<h2 align="center"> Click on the button below to log in with twitter </h2> <br /> <br />
-<div align="center"><button><a href="http://127.0.0.1:8000/login" style="text-decoration:none" >Log in with twitter</a></button></div>
+    <div class="login">
+        <h1>True Fan</h1>
+        <h2>Have you got a twitter account? Sweet !!</h2>
+        <a href="{{ login_url }}" style="text-decoration:none">Log in with twitter</a>
+    </div>
 {% endblock body %}

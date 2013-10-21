@@ -13,7 +13,7 @@ from twython import Twython
 from twyauth.models import TwitterProfile
 
 def index(request):
-    return render_to_response('twyauth/index.html')
+    return render_to_response('twyauth/index.html', {'login_url': request.build_absolute_uri(twyauth.LOGIN_URL)})
 
 
 def logout(request, redirect_url=twyauth.LOGOUT_REDIRECT_URL):
@@ -82,7 +82,7 @@ def thanks(request):
     else:
         phase2_auth(request, authorized_tokens)
 
-    return HttpResponseRedirect(twyauth.LOGIN_REDIRECT_URL)
+    return HttpResponseRedirect(request.build_absolute_uri(twyauth.LOGIN_REDIRECT_URL))
 
 from pprint import pprint
 def phase2_auth(request, authorized_tokens):
@@ -115,26 +115,29 @@ def user_timeline(request):
         login_url = request.build_absolute_uri(reverse("twyauth.views.begin_auth"))
         return HttpResponseRedirect(login_url)
 
+    user = None
     try:
         user = request.user.twitterprofile
         user.oauth_token = request.session['final_token']['oauth_token']
         user.oauth_secret = request.session['final_token']['oauth_token_secret']
-        user.set_password(request.session['final_token']['oauth_token_secret'])
+        #user.set_password(request.session['final_token']['oauth_token_secret'])  #TODO Ask Oguya why this is here
         user.save()
     except Exception as ex:
-        ex.message
+        return render_to_response('error.html', { 'error_message' : ex.message })
 
-    tweets = []
-    twitter = Twython(twyauth.TWITTER_KEY, twyauth.TWITTER_SECRET,
-                      user.oauth_token, user.oauth_secret)
 
     from twython import TwythonAuthError
     from pprint import pprint
     try:
+        if user is None:
+            raise Exception("User not validated")
+        tweets = []
+        twitter = Twython(twyauth.TWITTER_KEY, twyauth.TWITTER_SECRET,
+                      user.oauth_token, user.oauth_secret)
         user_tweets = twitter.get_user_timeline()
         for dTweet in user_tweets:
             tweets.append(dTweet['text'])
-        return render_to_response('twyauth/timeline.html', {'tweets':tweets, 'login_url': twyauth.LOGOUT_URL,})
+        return render_to_response('twyauth/timeline.html', {'tweets':tweets, 'login_url': request.build_absolute_uri(twyauth.LOGOUT_URL),})
     except TwythonAuthError as ex:
         #invalid tokens...get new tokens
         if ex.error_code == 401:
@@ -142,4 +145,6 @@ def user_timeline(request):
             return HttpResponseRedirect(logout_url)
             #return HttpResponse("something's wrong: <br/> %s" % ex.message)
         else:
-            return HttpResponse("something's wrong: <br/>%s" % ex.message)
+            return render_to_response('error.html', {'error_message' : "something's wrong: <br/>%s" % ex.message})
+    except BaseException as bex:
+        return render_to_response('error.html', { 'error_message': bex.message})
