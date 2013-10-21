@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Bulk Add Keywords{% endblock title %}
+
+{% block body %}
+<h2>Current Keywords</h2>
+<p>{% for keyword in keywords %}{{ keyword.value }}{% if not loop.last %},&nbsp;{% endif %}{% endfor %}</p>
+<form action="{% url 'bulk_keywords' %}" method="POST">
+  <p>{{ form.non_field_errors }}</p>
+  <div class="form-control">
+     {{ form.value.errors }}
+     <label for="id_value">Keywords:</label>
+     {{ form.value }}
+  </div>
+  <div class="form-actions">
+     <button type="submit">Add</button>
+  </div>
+</form>
+{% endblock body %}

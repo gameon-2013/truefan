@@ -36,3 +36,23 @@ def test_match(request):
     results = CompiledRegex.match(sample)
 
     return render(request, 'regex/match.html', {'results': results})
+
+def bulk_keywords(request):
+    if request.method != "POST":
+        keywords = Keyword.objects.all()
+        bulk_form = BulkKeywordForm()
+        return render(request, 'regex/bulk.html', { 'keywords': keywords, 'form': bulk_form })
+    
+    bulk_form = BulkKeywordForm(request.POST)
+    if not bulk_form.is_valid():
+        keywords = Keyword.objects.all()
+        return render(request, 'regex/bulk.html', { 'keywords': keywords, 'form': bulk_form })
+    
+    value = bulk_form.cleaned_data['value']
+    keywds = [i.strip() for i in value.split(',')]
+    for keywd in keywds:
+        keyword = Keyword(value=keywd)
+        keyword.save()
+    
+    return HttpResponseRedirect(reverse("bulk_keywords"))
+
