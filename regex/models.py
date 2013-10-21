@@ -27,7 +27,7 @@ class CompiledRegex(models.Model):
     date_compiled = models.DateTimeField(auto_now=True)
 
     def __get_compiled_regex(self):
-        return re.compile(self.regex)
+        return re.compile(self.regex, re.IGNORECASE)
 
     value = property(__get_compiled_regex)
 
