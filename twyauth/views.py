@@ -134,7 +134,8 @@ def user_timeline(request):
         tweets = []
         twitter = Twython(twyauth.TWITTER_KEY, twyauth.TWITTER_SECRET,
                       user.oauth_token, user.oauth_secret)
-        user_tweets = twitter.get_user_timeline()
+        # user_tweets = twitter.get_user_timeline()
+        user_tweets = get_tweets(twitter)
         for dTweet in user_tweets:
             tweets.append(dTweet['text'])
         return render_to_response('twyauth/timeline.html', {'tweets':tweets, 'login_url': request.build_absolute_uri(twyauth.LOGOUT_URL),})
