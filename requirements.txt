@@ -8,3 +8,6 @@ psycopg2==2.5.1
 static==0.4
 wsgiref==0.1.2
 twython==3.1.0
+redis==2.8.0
+rq==0.3.11
+APScheduler==2.1.1
