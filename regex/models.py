@@ -37,9 +37,7 @@ class CompiledRegex(models.Model):
         keywords = [keyword.value for keyword in Keyword.objects.all()]
         regex = "|".join(keywords)
 
-        compiled = re.compile(regex)
-
-        new_compiled_regex = CompiledRegex(value=compiled, regex=regex)
+        new_compiled_regex = CompiledRegex(regex=regex)
         new_compiled_regex.save()
 
     def __unicode__(self):
