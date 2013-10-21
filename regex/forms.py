@@ -11,3 +11,7 @@ class KeywordForm(ModelForm):
 
 class SampleForm(forms.Form):
 	sample = forms.CharField(widget=forms.Textarea)
+
+class BulkKeywordForm(forms.Form):
+        value = forms.CharField(widget=forms.Textarea)
+
