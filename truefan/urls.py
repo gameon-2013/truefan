@@ -7,11 +7,7 @@ from django.conf.urls import patterns, include, url
 urlpatterns = patterns('',
     url(r'', include('twyauth.urls')),
     url(r'', include('regex.urls')),
- #    url(r'^$', index),
-	# url(r'^register',registration),	
-	# url(r'^home', home),
- #    url(r'^login', login),
- #    url(r'^logout', logout),
+
     # Examples:
     # url(r'^$', 'truefan.views.home', name='home'),
     # url(r'^truefan/', include('truefan.foo.urls')),
