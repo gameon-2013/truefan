@@ -4,7 +4,7 @@ Install heroku toolbelt, pip and virtualenv
 # Clone the truefan repository 
 If you are reading this then am assuming this is already done :)
 
-    $ git clone https://gameon@bitbucket.org/gameon/truefan.git
+    $ git clone https://github.com/gameon-2013/truefan.git
 
 # Setup virtualenv
 
