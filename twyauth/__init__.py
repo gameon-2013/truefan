@@ -9,3 +9,4 @@ LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
 LOGIN_REDIRECT_URL = 'user_timeline'
 LOGOUT_REDIRECT_URL = '/'
+TWEET_LIMIT = 100

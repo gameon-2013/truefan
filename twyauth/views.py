@@ -134,7 +134,8 @@ def user_timeline(request):
         tweets = []
         twitter = Twython(twyauth.TWITTER_KEY, twyauth.TWITTER_SECRET,
                       user.oauth_token, user.oauth_secret)
-        user_tweets = twitter.get_user_timeline()
+        # user_tweets = twitter.get_user_timeline()
+        user_tweets = get_tweets(twitter)
         for dTweet in user_tweets:
             tweets.append(dTweet['text'])
         return render_to_response('twyauth/timeline.html', {'tweets':tweets, 'login_url': request.build_absolute_uri(twyauth.LOGOUT_URL),})
@@ -148,3 +149,17 @@ def user_timeline(request):
             return render_to_response('error.html', {'error_message' : "something's wrong: <br/>%s" % ex.message})
     except BaseException as bex:
         return render_to_response('error.html', { 'error_message': bex.message})
+
+def get_tweets(api, tweet_limit=twyauth.TWEET_LIMIT):
+    tweets = []
+    last_id = None
+    req_tweets = api.get_user_timeline()
+    while len(req_tweets) > 0 and len(tweets) <= tweet_limit:
+        if last_id:
+            tweets = tweets + req_tweets[1:]
+        else:
+            tweets = tweets + req_tweets
+        last_id = req_tweets[-1]['id']
+        req_tweets = api.get_user_timeline(max_id=last_id)
+    return tweets
+
