@@ -1,14 +1,46 @@
 <!doctype html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>{% block title %}{% endblock title %}</title>
-        <link rel="stylesheet" href="/static/css/base.css"/>
-        {% block styles %}{% endblock styles %}
+<head>    
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  
+  <link href="/static/css/bootstrap.css" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/base.css"/>
+
+	<title>{% block title %}TrueFan{% endblock title %}</title>
+
+    
+  {% block styles %}
+                
+  {% endblock styles %}
 </head>
 <body>
-	{% block body %}{% endblock body %}
-        {% block scripts %}{% endblock scripts %}
-        footer- I am soo happy!!
+	<div class="container">
+      <div class="header">
+        <ul class="nav nav-pills pull-right">
+
+          {% block nav %}
+          
+          {%endblock nav%}
+
+        </ul>
+        <img id="logo"src="/static/images/logo.png" alt="Logo" width="15%" height="20%">
+      </div>
+      
+	  {% block body %}	
+   
+	  {% endblock body %}
+
+    {% block scripts %}
+         
+    {% endblock scripts %}
+
+	    <div class="footer">
+	        <p>&copy; Nokia Research Center,   University of Nairobi,   GAMEON! Africa</p>
+	    </div>
+    </div> <!-- /container -->
 </body>
 </html>
