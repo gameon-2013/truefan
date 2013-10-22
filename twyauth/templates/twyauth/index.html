@@ -1,15 +1,17 @@
 {% extends 'base.html' %}
 
 {% block title %}True Fan{% endblock title %}
-{% block styles %}
-    <style>
-    .login { margin-left: auto; margin-right: auto; width: 50%; text-align: center;}
-    </style>
-{% endblock %}
+
+{% block nav %}
+    <li class="active"><a href="#">Home</a></li>
+    <li><a href="#">About</a></li>
+    <li><a href="#">Contact</a></li>
+{%endblock nav%}
 {% block body %}
-    <div class="login">
-        <h1>True Fan</h1>
-        <h2>Have you got a twitter account? Sweet !!</h2>
-        <a href="{{ login_url }}" style="text-decoration:none">Log in with twitter</a>
-    </div>
+    <div class="jumbotron">
+        <h1>TrueFan</h1>
+        <p class="lead">Are you a rugby fanatic? Prove your loyalty with TrueFan</p>
+        <p ><a class="btn btn-lg btn-success" id ="loginbutton" href= "{{ login_url }}">Login with twitter</a></p>
+    </div>      
+
 {% endblock body %}
