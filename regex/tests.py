@@ -27,6 +27,10 @@ class KeywordModelTest(TestCase):
 
         self.assertRaises(IntegrityError, k2.save)
 
+        # BUG: uniqueness should be case insensitive
+        # k2 = Keyword(value='Ruj')
+        # self.assertRaises(IntegrityError, k2.save)
+
 class RegexTest(TestCase):
     ''' test regex construct in keywords '''
     
