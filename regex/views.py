@@ -1,25 +1,23 @@
 from django.shortcuts import render
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
-from regex.models import Keyword, CompiledRegex
+
+from regex.models import *
 from forms import *
 
 def keywords(request):
     if request.method != "POST":
         keywords = Keyword.objects.all()
-        latest = CompiledRegex.latest()
         keyword_form = KeywordForm()
-        return render(request, 'regex/keywords.html', {'keywords':keywords, 'latest':latest, 'form': keyword_form})
+        return render(request, 'regex/keywords.html', {'keywords':keywords, 'form': keyword_form})
     
     keyword_form = KeywordForm(request.POST)
     if not keyword_form.is_valid():
         keywords = Keyword.objects.all()
-        latest = CompiledRegex.latest()
-        return render(request, 'regex/keywords.html', {'keywords':keywords, 'latest':latest, 'form': keyword_form})
+        return render(request, 'regex/keywords.html', {'keywords':keywords, 'form': keyword_form})
 
     keyword_value = keyword_form.cleaned_data['value']
-    keyword = Keyword(value=keyword_value)
-    keyword.save()
+    Keyword.objects.create(value=keyword_value)
 
     return HttpResponseRedirect(reverse("keywords"))
 

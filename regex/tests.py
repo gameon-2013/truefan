@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.db.utils import IntegrityError
+from django_webtest import WebTest
 from models import *
 
 class KeywordModelTest(TestCase):
@@ -12,7 +13,7 @@ class KeywordModelTest(TestCase):
         k = Keyword(value='rugby')
         k.save()
 
-        keywords = Keyword.objects.all();
+        keywords = Keyword.objects.all()
 
         self.assertEqual(len(keywords), 1, "Keyword not saved")
         self.assertIn(k, keywords, "Keyword not in list of saved keywords")
@@ -44,3 +45,22 @@ class RegexTest(TestCase):
 
         self.assertEqual(len(results), 2, "Wrong number of matches")
         self.assertIn('rugby', results, "Rugby not one of the results of the match")
+
+class KeywordViewsTest(WebTest):
+    ''' test views dealing with keywords '''
+    csrf_checks = False
+
+    def test_add_keyword(self):
+        ''' test addition of single keyword '''
+        keyword = 'rugby'
+
+        keywords_page = self.app.get('/regex/keywords').follow()
+
+        form = keywords_page.form
+
+        form['value'] = keyword
+        form.submit().follow()
+
+        keywords = Keyword.objects.all()
+        self.assertEqual(len(keywords), 1, "Keyword was not saved: "+repr(keywords))
+        self.assertEqual(keyword, keywords[0].value, "Keyword was not saved: "+repr(keywords[0]))
