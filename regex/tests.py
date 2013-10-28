@@ -88,3 +88,20 @@ class KeywordViewsTest(WebTest):
 
         keywords = Keyword.objects.all()
         self.assertEqual(len(keywords), 1, "Unique keyword was saved: "+repr(keywords))
+
+    def test_bulk_entry(self):
+        ''' test adding more than one keyword at a time '''
+        keywords = ['rugby', 'ruj', 'sevens']
+        keywords_string = ",".join(keywords)
+
+        bulk_page = self.app.get('/regex/bulk_keywords').follow()
+
+        form = bulk_page.form
+        form['value'] = keywords_string
+        response = form.submit().follow()
+
+        self.assertEqual(200, response.status_code, "Wrong status code: %s" % repr(response.status_code))        
+
+        keywords = Keyword.objects.all()
+        self.assertEqual(len(keywords), 3, "Keywords were not stored: %s" % repr(keywords))
+        self.assertIn('rugby', [i.value for i in keywords], "Rugby not in keywords stored: %s" % repr(keywords))
