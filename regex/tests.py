@@ -105,3 +105,24 @@ class KeywordViewsTest(WebTest):
         keywords = Keyword.objects.all()
         self.assertEqual(len(keywords), 3, "Keywords were not stored: %s" % repr(keywords))
         self.assertIn('rugby', [i.value for i in keywords], "Rugby not in keywords stored: %s" % repr(keywords))
+
+class MatchViewTest(WebTest):
+    ''' tests views dealing with matching samples '''
+
+    def setUp(self):
+        self.keywords = ['rugby', 'ruj', 'sevens']
+        for i in self.keywords:
+            Keyword.objects.create(value=i)
+
+    def test_positive_match(self):
+        ''' test matching a sample '''
+        sample = "This is rugby sevens"
+        match_page = self.app.get('/regex/match').follow()
+
+        form = match_page.form
+        form['sample'] = sample
+        response = form.submit()
+
+        self.assertEqual(200, response.status_code, "Wrong status code: %s" % repr(response.status_code))
+        self.assertIn('rugby', response, "Rugby not in response: %s" % response.content)
+        self.assertIn('sevens', response, "Sevens not in response: %s" % response.content)

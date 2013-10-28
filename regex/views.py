@@ -31,7 +31,7 @@ def test_match(request):
         return render(request, 'regex/match.html', {'form': sample_form})
 
     sample =  sample_form.cleaned_data['sample']
-    results = CompiledRegex.match(sample)
+    results = Keyword.match(sample)
 
     return render(request, 'regex/match.html', {'results': results})
 
