@@ -64,3 +64,23 @@ class KeywordViewsTest(WebTest):
         keywords = Keyword.objects.all()
         self.assertEqual(len(keywords), 1, "Keyword was not saved: "+repr(keywords))
         self.assertEqual(keyword, keywords[0].value, "Keyword was not saved: "+repr(keywords[0]))
+
+    def test_unique_keyword(self):
+        ''' should fail when the same keyword is entered '''
+        keyword = 'rugby'
+
+        Keyword.objects.create(value=keyword)
+        keywords = Keyword.objects.all()
+        self.assertEqual(len(keywords), 1, "Test keyword not added: %s" % repr(keywords))
+
+        keywords_page = self.app.get('/regex/keywords').follow()
+
+        form = keywords_page.form
+        form['value'] = keyword
+        response = form.submit()
+
+        self.assertEqual(200, response.status_code, "Wrong status code: %s" % repr(response.status_code))
+        self.assertIn('already exists', response, "Error message not shown: %s" % response.content)
+
+        keywords = Keyword.objects.all()
+        self.assertEqual(len(keywords), 1, "Unique keyword was saved: "+repr(keywords))
