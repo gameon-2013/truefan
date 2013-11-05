@@ -7,7 +7,7 @@ from django.conf.urls import patterns, include, url
 urlpatterns = patterns('',
     url(r'', include('twyauth.urls')),
     url(r'', include('regex.urls')),
-
+    url(r'^django-rq/', include('django_rq.urls')),
     # Examples:
     # url(r'^$', 'truefan.views.home', name='home'),
     # url(r'^truefan/', include('truefan.foo.urls')),
