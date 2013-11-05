@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}User Timeline{% endblock title %}
+{% block title %}User's Rugby Tweets{% endblock title %}
 {% block nav %}
           <li class="active"><a href="#">Tweets</a></li>
           <li><a href="#">Trivia Stats</a></li>
@@ -9,7 +9,7 @@
 {%endblock nav%}
 
 {% block body %}
-<h1>True Fan - User's Timeline Tweets</h1>
+<h1>True Fan - User's Rugby Tweets</h1>
 {% if tweets %}
 	<ul>
 	{% for tweet in tweets %}
@@ -17,6 +17,6 @@
 	{% endfor %}
 	</ul>
 {% else %}
-	<p>No tweets are available. </p>
+	<p>No tweets are available for now. Check back later</p>
 {% endif %}
 {% endblock body %}
