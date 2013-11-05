@@ -123,7 +123,7 @@ def user_timeline(request):
         #user.set_password(request.session['final_token']['oauth_token_secret'])  #TODO Ask Oguya why this is here
         user.save()
     except Exception as ex:
-        return render_to_response('error.html', { 'error_message' : ex.message })
+        return render_to_response('error.html', { 'error_message' : str(ex) })
 
 
     from twython import TwythonAuthError
@@ -146,9 +146,9 @@ def user_timeline(request):
             return HttpResponseRedirect(logout_url)
             #return HttpResponse("something's wrong: <br/> %s" % ex.message)
         else:
-            return render_to_response('error.html', {'error_message' : "something's wrong: <br/>%s" % ex.message})
+            return render_to_response('error.html', {'error_message' : "something's wrong: <br/>%s" % str(ex)})
     except BaseException as bex:
-        return render_to_response('error.html', { 'error_message': bex.message})
+        return render_to_response('error.html', { 'error_message': str(bex)})
 
 def get_tweets(api, tweet_limit=twyauth.TWEET_LIMIT):
     tweets = []
