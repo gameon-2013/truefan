@@ -15,7 +15,7 @@ class TwitterProfile(models.Model):
     twitter_userid = models.CharField(max_length=50)
     oauth_token = models.CharField(max_length=200)
     oauth_secret = models.CharField(max_length=200)
-    since_id = models.BigIntegerField()
+    since_id = models.BigIntegerField(null=True)
     
     def get_api(self):
         return Twython(twyauth.TWITTER_KEY, twyauth.TWITTER_SECRET,
@@ -70,7 +70,7 @@ class TwitterProfile(models.Model):
             if len(matches) > 0:
                 rugby_tweet = RugbyTweet()
                 rugby_tweet.text = tweet['text']
-                rugby_tweet.tweet_id = tweet['id']
+                rugby_tweet.tweetid = tweet['id']
                 rugby_tweet.created_at = tweet['created_at']
                 rugby_tweet.matches = ",".join(matches)
                 rugby_tweet.confidence = len(matches)
@@ -82,7 +82,7 @@ class RugbyTweet(models.Model):
     """ stores tweets that are tagged as containing rugby 
         words """
     text = models.CharField(max_length=200)
-    tweet_id = models.BigIntegerField()
+    tweetid = models.BigIntegerField()
     created_at = models.CharField(max_length=100, null=True) # TODO remove null
     matches = models.CharField(max_length=200)
     confidence = models.DecimalField(max_digits=6, decimal_places=4)
