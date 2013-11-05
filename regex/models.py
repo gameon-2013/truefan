@@ -14,6 +14,9 @@ class Keyword(models.Model):
     def regex(self):
         ''' returns a regex OR of all the keywords '''
         keywords = [keyword.value for keyword in Keyword.objects.all()]
+        if len(keywords) < 1:
+            return None
+        
         regex = "|".join(keywords)
         return regex
 
@@ -21,7 +24,11 @@ class Keyword(models.Model):
     def match(self, sample):
         ''' returns a list of words that match the regex of all keywords 
         against the sample '''
-        matcher = re.compile(Keyword.regex(), re.IGNORECASE)
-        # TODO cache matcher
+        regex = Keyword.regex()
+        if regex:
+            matcher = re.compile(regex, re.IGNORECASE)
+            # TODO cache matcher
 
-        return matcher.findall(sample)
+            return matcher.findall(sample)
+        
+        return list()

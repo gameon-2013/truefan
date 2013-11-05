@@ -49,6 +49,15 @@ class RegexTest(TestCase):
 
         self.assertEqual(len(results), 2, "Wrong number of matches")
         self.assertIn('rugby', results, "Rugby not one of the results of the match")
+    
+    def test_match_with_no_keywords(self):
+        for i in Keyword.objects.all():
+            i.delete()
+        
+        sample = "This is rugby sevens"
+        results = Keyword.match(sample)
+        
+        self.assertEqual(0, len(results), "List should be empty, results: %s" % repr(results))
 
 class KeywordViewsTest(WebTest):
     ''' test views dealing with keywords '''
