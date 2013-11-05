@@ -1,4 +1,4 @@
 web: gunicorn truefan.wsgi
-worker: python background/worker.py
+worker: python manage.py rqworker high default low
 clock: python background/clock.py
 

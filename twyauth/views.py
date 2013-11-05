@@ -1,12 +1,15 @@
+import twyauth
+import django_rq
+
 from django.contrib.auth import authenticate, login, logout as django_logout
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render_to_response
 from django.core.urlresolvers import reverse
 
-import twyauth
-
 from twython import Twython
+
+from tasks import analyze_profile_tweets
 
 # If you've got your own Profile setup, see the note in the models file
 # about adapting this to your own setup.
@@ -65,6 +68,9 @@ def thanks(request):
         profile.oauth_token = authorized_tokens['oauth_token']
         profile.oauth_secret = authorized_tokens['oauth_token_secret']
         profile.save()
+        
+        queue = django_rq.get_queue()
+        queue.enqueue(analyze_profile_tweets, profile)
 
     user = authenticate(
         username=authorized_tokens['screen_name'],
@@ -96,6 +102,9 @@ def phase2_auth(request, authorized_tokens):
         profile.oauth_token = authorized_tokens['oauth_token']
         profile.oauth_secret = authorized_tokens['oauth_token_secret']
         profile.save()
+        
+        queue = django_rq.get_queue()
+        queue.enqueue(analyze_profile_tweets, profile)
 
         #authenticate & login
         user = authenticate(
