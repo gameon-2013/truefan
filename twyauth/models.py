@@ -59,24 +59,27 @@ class TwitterProfile(models.Model):
         
         tweets = self.get_tweets(tweet_limit)
         
-        # store the latest id
-        ids = [tweet['id'] for tweet in tweets]
-        self.since_id = max(ids)
+        if len(tweets) > 0:
         
-        # find rugby tweets
-        for tweet in tweets:
-            matches = Keyword.match(tweet['text'])
+            # store the latest id
+            ids = [tweet['id'] for tweet in tweets]
+            self.since_id = max(ids)
+            self.save()
             
-            if len(matches) > 0:
-                rugby_tweet = RugbyTweet()
-                rugby_tweet.text = tweet['text']
-                rugby_tweet.tweetid = tweet['id']
-                rugby_tweet.created_at = tweet['created_at']
-                rugby_tweet.matches = ",".join(matches)
-                rugby_tweet.confidence = len(matches)
-                rugby_tweet.profile = self
+            # find rugby tweets
+            for tweet in tweets:
+                matches = Keyword.match(tweet['text'])
                 
-                rugby_tweet.save()
+                if len(matches) > 0:
+                    rugby_tweet = RugbyTweet()
+                    rugby_tweet.text = tweet['text']
+                    rugby_tweet.tweetid = tweet['id']
+                    rugby_tweet.created_at = tweet['created_at']
+                    rugby_tweet.matches = ",".join(matches)
+                    rugby_tweet.confidence = len(matches)
+                    rugby_tweet.profile = self
+                    
+                    rugby_tweet.save()
 
 class RugbyTweet(models.Model):
     """ stores tweets that are tagged as containing rugby 
