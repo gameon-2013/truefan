@@ -1,5 +1,7 @@
 # background tasks
 
+import django_rq
+
 from twyauth.models import *
 
 def analyze_profile_tweets(profile):
@@ -7,5 +9,7 @@ def analyze_profile_tweets(profile):
 
 def analyze_all_profile_tweets():
     profiles = TwitterProfile.objects.all()
+    queue = django_rq.get_queue()
+    
     for i in profiles:
-        i.analyze_last_tweets()
+        queue.enqueue(analyze_profile_tweets, i)
