@@ -137,6 +137,7 @@ INSTALLED_APPS = (
     "twyauth",
     'django_rq',
     'trivia',
+    'south',
 )
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
