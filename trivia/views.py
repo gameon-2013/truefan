@@ -15,7 +15,7 @@ from forms import ChoiceCategoryForm
 
 
 def landing(request):
-    return render_to_response('trivia/landing.html')
+    return render_to_response('trivia/base.html')
 
 
 def play(request, level=None):
@@ -25,7 +25,7 @@ def play(request, level=None):
 
     try:
         selected_level = QuestionLevel.objects.get(name=level)
-        queries = Question.objects.get(level=selected_level.id)
+        queries = Question.objects.filter(level=selected_level.id)
         return render_to_response('trivia/trivia.html', {'level': level, 'questions': queries})
     except Exception, ex:
         return render_to_response('error.html', {'error_message': str(ex)})

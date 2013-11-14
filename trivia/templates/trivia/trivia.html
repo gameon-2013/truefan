@@ -1,6 +1,6 @@
-{% extends 'base.html' %}
-{% block title %}Play{% endblock title %}
-{% block body %}
+{% extends 'trivia/base.html' %}
+{% block trivia_title %}Play{% endblock %}
+{% block trivia_body %}
     <h4>Play trivia</h4>
     {% if level %}<p>Level : {{ level }}</p>
     {% if questions  %}
@@ -12,6 +12,6 @@
     {% endif %}
     {% elif levels %}
         <p>Select a level to play</p>
-        {% for l in levels %}<p><a href="{% url 'trivia' %}/{{ l.name }}">{{ l.name }}</a></p> {% endfor %}
+        {% for l in levels %}<p><a href="{% url 'play' %}{{ l.name }}">{{ l.name }}</a></p> {% endfor %}
     {% endif %}
 {% endblock %}
