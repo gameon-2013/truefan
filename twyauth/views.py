@@ -16,7 +16,11 @@ from tasks import analyze_profile_tweets
 from twyauth.models import TwitterProfile
 
 def index(request):
-    return render_to_response('twyauth/index.html', {'login_url': request.build_absolute_uri(twyauth.LOGIN_URL)})
+    #sign in after sign in error
+    if request.user is not None and request.user.is_authenticated():
+        return HttpResponseRedirect(request.build_absolute_uri(reverse("twyauth.views.user_timeline")))
+    else:
+        return render_to_response('twyauth/index.html', {'login_url': request.build_absolute_uri(twyauth.LOGIN_URL)})
 
 
 def logout(request, redirect_url=twyauth.LOGOUT_REDIRECT_URL):
@@ -29,9 +33,6 @@ def begin_auth(request):
     """
         The view function that initiates the entire handshake.
     """
-    #sign in after sign in error
-    #if request.user is not None:
-    #    return HttpResponseRedirect(request.build_absolute_uri(reverse("twyauth.views.user_timeline")))
 
     # Instantiate Twython
     twitter = Twython(twyauth.TWITTER_KEY, twyauth.TWITTER_SECRET)
