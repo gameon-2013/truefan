@@ -58,8 +58,11 @@ def thanks(request):
     # for permanent ones and store them...
 
     #handle denied access error issue #4
-    if request.GET['denied'] is not None:
-        return HttpResponseRedirect(request.build_absolute_uri(reverse('home')))
+    try:
+        if request.GET['denied'] is not None:
+            return HttpResponseRedirect(request.build_absolute_uri(reverse('home')))
+    except Exception as e:
+        pass
 
     oauth_token = request.session['request_token']['oauth_token']
     oauth_token_secret = request.session['request_token']['oauth_token_secret']
