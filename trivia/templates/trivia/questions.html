@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block body %}
+    <table class="table">
+    <caption>Question Levels</caption>
+        <thead>
+        <tr>
+            <th>Name</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for l in levels %}
+            <tr>
+                <td>{{ l.name }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <table class="table">
+    <caption>Questions</caption>
+        <thead>
+        <tr>
+            <th>Question</th>
+            <th>Level</th>
+            <th>Answer</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for q in questions %}
+            <tr>
+                <td>{{ q.content }}</td>
+                <td>{{ q.level.name }}</td>
+                <td>{{ q.correct_choice.content }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block body %}
+    <table class="table">
+    <caption>Choice Catgories</caption>
+        <thead>
+        <tr>
+            <th>Name</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for c in categories %}
+            <tr>
+                <td>{{ c.name }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <table class="table">
+    <caption>Choices</caption>
+        <thead>
+        <tr>
+            <th>Content</th>
+            <th>Category</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for c in choices %}
+            <tr>
+                <td>{{ c.content }}</td>
+                <td>{{ c.category.name }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
