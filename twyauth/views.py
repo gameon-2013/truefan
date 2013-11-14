@@ -21,6 +21,7 @@ def index(request):
 
 def logout(request, redirect_url=twyauth.LOGOUT_REDIRECT_URL):
     django_logout(request)
+    request.session.flush()
     return HttpResponseRedirect(request.build_absolute_uri(redirect_url))
 
 
@@ -28,6 +29,10 @@ def begin_auth(request):
     """
         The view function that initiates the entire handshake.
     """
+    #sign in after sign in error
+    #if request.user is not None:
+    #    return HttpResponseRedirect(request.build_absolute_uri(reverse("twyauth.views.user_timeline")))
+
     # Instantiate Twython
     twitter = Twython(twyauth.TWITTER_KEY, twyauth.TWITTER_SECRET)
 
@@ -90,7 +95,6 @@ def thanks(request):
 
     return HttpResponseRedirect(request.build_absolute_uri(twyauth.LOGIN_REDIRECT_URL))
 
-from pprint import pprint
 def phase2_auth(request, authorized_tokens):
     user = User.objects.get(username=authorized_tokens['screen_name'])
 
@@ -120,7 +124,7 @@ def phase2_auth(request, authorized_tokens):
 def user_timeline(request):
     """An example view with Twython/OAuth hooks/calls to fetch data about the user in question."""
 
-    if not request.user.is_authenticated():
+    if not request.user.is_authenticated() or request.user.is_anonymous():
         login_url = request.build_absolute_uri(reverse("twyauth.views.begin_auth"))
         return HttpResponseRedirect(login_url)
 
