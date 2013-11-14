@@ -33,6 +33,9 @@ def begin_auth(request):
     """
         The view function that initiates the entire handshake.
     """
+    #no need to login twice
+    if request.user is not None and request.user.is_authenticated():
+        return HttpResponseRedirect(request.build_absolute_uri(reverse("twyauth.views.user_timeline")))
 
     # Instantiate Twython
     twitter = Twython(twyauth.TWITTER_KEY, twyauth.TWITTER_SECRET)
