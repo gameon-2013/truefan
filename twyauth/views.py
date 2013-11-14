@@ -124,8 +124,8 @@ def phase2_auth(request, authorized_tokens):
 def user_timeline(request):
     """An example view with Twython/OAuth hooks/calls to fetch data about the user in question."""
 
-    if not request.user.is_authenticated() or request.user.is_anonymous():
-        login_url = request.build_absolute_uri(reverse("twyauth.views.begin_auth"))
+    if not request.user.is_authenticated():
+        login_url = request.build_absolute_uri(reverse('home'))
         return HttpResponseRedirect(login_url)
 
     user = None
