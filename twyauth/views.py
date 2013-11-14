@@ -56,6 +56,11 @@ def thanks(request):
     """
     # Now that we've got the magic tokens back from Twitter, we need to exchange
     # for permanent ones and store them...
+
+    #handle denied access error issue #4
+    if request.GET['denied'] is not None:
+        return HttpResponseRedirect(request.build_absolute_uri(reverse('home')))
+
     oauth_token = request.session['request_token']['oauth_token']
     oauth_token_secret = request.session['request_token']['oauth_token_secret']
     twitter = Twython(twyauth.TWITTER_KEY, twyauth.TWITTER_SECRET,
