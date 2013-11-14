@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
+{% block title %}Trivia{% endblock title %}
 {% block body %}
-    <a href="{{ quest_url }}">Questions</a>
-    <a href="{{ choice_url }}">Choices</a>
-    <a href="{{ new_url }}">New trivia</a>
+    <a href="{% url 'questions' %}">Questions</a>
+    <a href="{% url 'choices' %}">Choices</a>
+    <a href="{% url 'play' %}">Play trivia</a>
 {% endblock %}

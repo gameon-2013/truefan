@@ -1,4 +1,17 @@
 {% extends 'base.html' %}
+{% block title %}Play{% endblock title %}
 {% block body %}
-    <h4>New trivia</h4>
+    <h4>Play trivia</h4>
+    {% if level %}<p>Level : {{ level }}</p>
+    {% if questions  %}
+        <ul style="list-style-type: decimal">
+        {% for q in questions %}
+            <li>{{ q.content }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    {% elif levels %}
+        <p>Select a level to play</p>
+        {% for l in levels %}<p><a href="{% url 'trivia' %}/{{ l.name }}">{{ l.name }}</a></p> {% endfor %}
+    {% endif %}
 {% endblock %}

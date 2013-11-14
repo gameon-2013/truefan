@@ -1,4 +1,6 @@
+
 {% extends 'base.html' %}
+{% block title %}Choices{% endblock title %}
 {% block body %}
     <table class="table">
     <caption>Choice Catgories</caption>
@@ -15,6 +17,13 @@
         {% endfor %}
         </tbody>
     </table>
+    <form action="{% url 'choice_cat_save' %}" class="form-inline" method="post">
+        {% for field in cat_form %}
+            {{ field.errors }}
+            {{ field.label_tag }}: {{ field }}
+        {% endfor %}
+        <input type="submit" value="Add Category"/>
+    </form>
     <table class="table">
     <caption>Choices</caption>
         <thead>
@@ -32,4 +41,11 @@
         {% endfor %}
         </tbody>
     </table>
+        <form action="{% url 'choice_save' %}" class="form-inline" method="post">
+        {% for field in choice_form %}
+            {{ field.errors }}
+            {{ field.label_tag }}: {{ field }}
+        {% endfor %}
+        <input type="submit" value="Add Choice"/>
+    </form>
 {% endblock %}
