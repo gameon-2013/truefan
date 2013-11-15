@@ -18,4 +18,7 @@ urlpatterns = patterns('',
     # A sample view of users timeline
     url(r'^user_timeline/?$', "twyauth.views.user_timeline", name="twitter_timeline"),
 
+    # Show  statistics
+    url(r'^stats/?$', "twyauth.views.stats", name="stats"),
+
 )

@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+{% block scripts %}
+
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Description', 'Percentage'],
+          ['Rugby related',  40],
+          ['Non-rugby related',  60]
+        ]);
+
+        var options = {
+          title: 'My Tweets',
+          is3D: true,
+          titleTextStyle: { 
+              color: '#3498db',
+              fontSize: 20},
+          legend: {
+            position: 'center', 
+            textStyle: {
+              color: '#3498db', 
+              fontSize: 16}
+            },
+          colors:['#FB4C39','#3498db']
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('tweets'));
+        chart.draw(data, options);
+      }
+    </script>
+
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Description', 'Percentage'],
+          ['Correct',  60],
+          ['Not Correct', 40]
+        ]);
+
+        var options = {
+          title: 'My Trivia',
+          is3D: true,
+          titleTextStyle: { 
+              color: '#3498db',
+              fontSize: 20},
+          legend: {
+            position: 'center', 
+            textStyle: {
+              color: '#3498db', 
+              fontSize: 16}
+            },
+          colors:['#FB4C39','#3498db']
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('trivia'));
+        chart.draw(data, options);
+      }
+    </script>
+
+    <script type='text/javascript'>
+      google.load('visualization', '1', {packages:['gauge']});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Label', 'Value'],
+          ['Truefanship', 60]
+        ]);
+
+        var options = {
+          width: 200, height: 200,
+          redFrom: 60, redTo: 100,
+          yellowFrom:0, yellowTo: 60,
+          minorTicks: 5
+        };
+
+        var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+    </script>
+         
+{% endblock scripts %}
+
+{% block title %}User's Rugby Tweets{% endblock title %}
+
+{% block h1 %}
+          <h1 style="padding:35px;" align="center"> User Statistics </h1> 
+{%endblock h1 %}
+
+{% block nav %}
+          <li><a href="{{ login_url }}">Logout</a></li>
+{%endblock nav%}
+
+{% block body %}
+
+<h3>My Aggregate Truefanship: 60% </h3>
+
+<div id='chart_div' style="margin-left:100px;"></div>
+
+<div id="tweets" style="width: 500px; height: 300px;"></div> 
+
+<h3>Frequency of rugby related tweets: 2 days </h3>
+
+<div id="trivia" style="width: 500px; height: 300px;"></div> 
+
+<h3>My Badges: </h3>
+
+<img src="/static/badges/hot.png" />
+<img src="/static/badges/feather.png" />
+<img src="/static/badges/star.png" />
+<img src="/static/badges/twitter.png" />
+<img src="/static/badges/key.png" />
+
+{% endblock body %}

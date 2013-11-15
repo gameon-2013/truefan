@@ -185,3 +185,7 @@ def get_tweets(api, tweet_limit=twyauth.TWEET_LIMIT):
         req_tweets = api.get_user_timeline(max_id=last_id)
     return tweets
 
+def stats(request):
+    #show statistics
+        return render_to_response('twyauth/stats.html')
+

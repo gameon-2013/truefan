@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
   <meta name="author" content="">
-
   
   <link href="/static/css/bootstrap.css" rel="stylesheet">
   <link rel="stylesheet" href="/static/css/base.css"/>
@@ -27,7 +26,15 @@
           {%endblock nav%}
 
         </ul>
-        <img id="logo"src="/static/imgs/logo.png" alt="Logo" width="15%" height="20%">
+        <div id="logo">
+          <img src="/static/imgs/logo.png" alt="Logo" width="15%" height="20%" align="left" >
+          {% block h1 %}
+          
+          {%endblock h1 %}
+          <div clear="both"> </div>
+        </div>        
+
+
       </div>
       
 	  {% block body %}	
