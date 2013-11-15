@@ -2,9 +2,9 @@
 {% block title %}Trivia - {% block trivia_title %}{% endblock %} {% endblock %}
 {% block body %}
     <div>
-        <a href="{% url 'questions' %}">Questions</a>
-        <a href="{% url 'choices' %}">Choices</a>
-        <a href="{% url 'play' %}">Play trivia</a>
+        <a class="btn" href="{% url 'play' %}">Play trivia</a>
+        <a class="btn"  href="{% url 'questions' %}">Questions</a>
+        <a class="btn"  href="{% url 'choices' %}">Choices</a>
     </div>
     {% block trivia_body %}{% endblock %}
 {% endblock %}

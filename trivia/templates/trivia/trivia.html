@@ -3,15 +3,20 @@
 {% block trivia_body %}
     <h4>Play trivia</h4>
     {% if level %}<p>Level : {{ level }}</p>
-    {% if questions  %}
-        <ul style="list-style-type: decimal">
-        {% for q in questions %}
-            <li>{{ q.content }}</li>
-        {% endfor %}
-        </ul>
-    {% endif %}
+        {% if questions %}
+            <ul style="list-style-type: decimal">
+                {% for q in questions %}
+                    <li>
+                        <div>
+                            <p>{{ q.question.content }}</p>
+                            {% for c in q.choices %}<input type="radio" style="margin-left:10px;" value="{{ c.id }}"/>{{ c.content }}{% endfor %}
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
     {% elif levels %}
         <p>Select a level to play</p>
-        {% for l in levels %}<p><a href="{% url 'play' %}{{ l.name }}">{{ l.name }}</a></p> {% endfor %}
+        <ul>{% for l in levels %}<li><a href="{% url 'play' %}{{ l.name }}">{{ l.name }}</a></li> {% endfor %}</ul>
     {% endif %}
 {% endblock %}

@@ -13,10 +13,7 @@ from forms import QuestionForm
 from forms import ChoiceForm
 from forms import ChoiceCategoryForm
 
-
-def landing(request):
-    return render_to_response('trivia/base.html')
-
+from random import shuffle
 
 def play(request, level=None):
     if level is None:
@@ -25,8 +22,15 @@ def play(request, level=None):
 
     try:
         selected_level = QuestionLevel.objects.get(name=level)
-        queries = Question.objects.filter(level=selected_level.id)
-        return render_to_response('trivia/trivia.html', {'level': level, 'questions': queries})
+        queries = list(Question.objects.filter(level=selected_level.id))
+        shuffle(queries)
+        query_choices = []
+        for i in queries:
+            choice_cats = list(Choice.objects.filter(category=i.correct_choice.category))
+            shuffle(choice_cats)
+            obj = { 'question' : i, 'choices': choice_cats }
+            query_choices.append(obj)
+        return render_to_response('trivia/trivia.html', {'level': level, 'questions': query_choices})
     except Exception, ex:
         return render_to_response('error.html', {'error_message': str(ex)})
 

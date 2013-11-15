@@ -1,7 +1,6 @@
 __author__ = 'mbacho'
 
 from django.conf.urls import patterns, url
-from views import landing
 from views import questions
 from views import choices
 from views import play
@@ -16,7 +15,7 @@ from views import question_save
 # admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^trivia/$', landing, name="trivia"),
+    url(r'^trivia/$', play, name="trivia"),
     url(r'^trivia/questions/$', questions, name="questions"),
     url(r'^trivia/choices/$', choices, name="choices"),
     url(r'^trivia/play/$', play, name="play"),

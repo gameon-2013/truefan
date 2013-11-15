@@ -1,0 +1,60 @@
+[
+    { "model": "trivia.ChoiceCategory", "pk": 1, "fields": { "name": "player" }},
+    { "model": "trivia.ChoiceCategory", "pk": 2, "fields": { "name": "the game" }},
+    { "model": "trivia.ChoiceCategory", "pk": 3, "fields": { "name": "history" }},
+
+
+    { "model": "trivia.Choice", "pk": 1, "fields": { "content": "Collins", "category": 1}},
+    { "model": "trivia.Choice", "pk": 2, "fields": { "content": "Andrew", "category": 1}},
+    { "model": "trivia.Choice", "pk": 3, "fields": { "content": "Humpfrey", "category": 1}},
+    { "model": "trivia.Choice", "pk": 4, "fields": { "content": "Biko", "category": 1}},
+    { "model": "trivia.Choice", "pk": 5, "fields": { "content": "H-post", "category": 2}},
+    { "model": "trivia.Choice", "pk": 6, "fields": { "content": "try-post", "category": 2 }},
+    { "model": "trivia.Choice", "pk": 7, "fields": { "content": "line-out", "category": 2 }},
+    { "model": "trivia.Choice", "pk": 8, "fields": { "content": "rack", "category": 2 }},
+    { "model": "trivia.Choice", "pk": 9, "fields": { "content": "american football", "category": 3 }},
+    { "model": "trivia.Choice", "pk": 10, "fields": { "content": "soccer", "category": 3 }},
+    { "model": "trivia.Choice", "pk": 11, "fields": { "content": "basketball", "category": 3 }},
+    { "model": "trivia.Choice", "pk": 12, "fields": { "content": "hockey", "category": 3 }},
+
+    { "model": "trivia.QuestionLevel", "pk": 1, "fields": { "name": "easy" }},
+    { "model": "trivia.QuestionLevel", "pk": 2, "fields": { "name": "medium" }},
+    { "model": "trivia.QuestionLevel", "pk": 3, "fields": { "name": "hard" }},
+
+    {
+        "model": "trivia.Question",
+        "pk": 1,
+        "fields": {
+            "content": "What is the first name of Kenya Seven's captain?",
+            "correct_choice":2,
+            "level":1
+        }
+    },
+    {
+        "model": "trivia.Question",
+        "pk": 2,
+        "fields": {
+            "content": "What is the first name of Injera, Kenya Seven's winger?",
+            "correct_choice":1,
+            "level":1
+        }
+    },
+    {
+        "model": "trivia.Question",
+        "pk": 3,
+        "fields": {
+            "correct_choice": 5,
+            "level": 1,
+            "content": "What is the name of the post through which players kick a ball?"
+        }
+    },
+    {
+        "model": "trivia.Question",
+        "pk": 4,
+        "fields": {
+            "correct_choice": 10,
+            "level": 1,
+            "content": "From which game was rugby created?"
+        }
+    }
+]
