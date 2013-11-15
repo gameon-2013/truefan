@@ -95,7 +95,7 @@
 {% block nav %}
 		  <li><a href="/user_timeline">Tweets</a></li>
           <li class="active"><a href="#">Statistics</a></li>
-          <li><a href="{{ login_url }}">Logout</a></li>
+          <li><a href="{% url 'twitter_logout' %}">Logout</a></li>
 {%endblock nav%}
 
 {% block body %}
