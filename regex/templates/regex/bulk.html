@@ -4,7 +4,7 @@
 
 {% block body %}
 <h2>Current Keywords</h2>
-<p>{% for keyword in keywords %}{{ keyword.value }}{% if not loop.last %},&nbsp;{% endif %}{% endfor %}</p>
+<p>{% for keyword in keywords %}{{ keyword.value }} - <a href="{% url 'remove_keyword' keyword.id %}">Remove</a> {% if not loop.last %},&nbsp;{% endif %}{% endfor %}</p>
 <form action="{% url 'bulk_keywords' %}" method="POST">
   <p>{{ form.non_field_errors }}</p>
   <div class="control-group">

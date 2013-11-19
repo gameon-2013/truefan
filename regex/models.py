@@ -1,5 +1,6 @@
-import re
+from __future__ import division
 
+import re
 from django.db import models
 
 class Keyword(models.Model):

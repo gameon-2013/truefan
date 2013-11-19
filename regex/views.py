@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 
@@ -42,3 +42,9 @@ def bulk_keywords(request):
     
     return HttpResponseRedirect(reverse("bulk_keywords"))
 
+def remove_keyword(request, keyword):
+    keyword = get_object_or_404(Keyword, pk=keyword)
+    keyword.delete()
+    
+    return HttpResponseRedirect(reverse("bulk_keywords"))
+    

@@ -8,7 +8,8 @@ from views import *
 urlpatterns = patterns('',
     url(r'^regex/keywords/$', keywords, name="keywords"),
     url(r'^regex/match/$', test_match, name="match"),
-    url(r'^regex/bulk_keywords/$', bulk_keywords, name="bulk_keywords"), 
+    url(r'^regex/bulk_keywords/$', bulk_keywords, name="bulk_keywords"),
+    url(r'^regex/remove/(\d+)/$', remove_keyword, name="remove_keyword"), 
     # Examples:
     # url(r'^$', 'truefan.views.home', name='home'),
     # url(r'^truefan/', include('truefan.foo.urls')),

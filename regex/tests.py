@@ -130,6 +130,21 @@ class KeywordViewsTest(WebTest):
         self.assertEqual(len(keywords), 3, "Keywords were not stored: %s" % repr(keywords))
         self.assertIn('rugby', [i.value for i in keywords], "Rugby not in keywords stored: %s" % repr(keywords))
         self.assertEqual(weight, float(keywords[0].weight), "Weight did not match: %s" % repr(keywords))
+    
+    def test_remove_entry(self):
+        ''' test removing one keyword '''
+        keyword = Keyword.objects.create(value="Rugby", weight=0.9)
+        
+        ks = Keyword.objects.all()
+        self.assertEqual(len(ks), 1, "Keyword was not stored, Keywords: %s" % repr(ks))
+        
+        response = self.app.get('/regex/remove/%s' % repr(keyword.id))
+        self.assertNotEqual(404, response.status_code, "Wrong status code: %s" % repr(response.status_code))
+        
+        response.follow()
+        
+        ks = Keyword.objects.all()
+        self.assertEqual(len(ks), 0, "Keyword was not removed, Keywords: %s" % repr(ks))
 
 class MatchViewTest(WebTest):
     ''' tests views dealing with matching samples '''
