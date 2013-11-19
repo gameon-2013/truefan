@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Test Data Results{% endblock title %}
+
+{% block body %}
+<h1>Test Data Results</h1>
+
+<h4>Matched {{ stats.rugby_percent }} % of Rugby Tweets <small>{{ stats.success_rugby }} of {{ stats.rugby_tweets }}</small></h4>
+<h4>Matched {{ stats.non_rugby_percent }} % of Random Tweets <small>{{ stats.success_non_rugby }} of {{ stats.non_rugby }}</small></h4>
+
+{% regroup results|dictsortreversed:"rugby_tweet" by rugby_tweet as positive_list %}
+{% for positive in positive_list %}
+    <h3>{{ positive.grouper }}</h3>
+    <ul>
+    {% for instance in positive.list %}
+        <li>{{ instance.text }} <label class="label {% if instance.confidence > 0.7 %}label-success{% else %}{% if instance.confidence <= 0.7 and instance.confidence > 0.3 %}label-warning{% else %}label-danger{% endif %}{% endif %}">Confidence: {{ instance.confidence }}</label>&nbsp;Matches: {% for m in instance.matches %}<label class="label label-default">{{ m }}</label>&nbsp;{% endfor %}</li>
+    {% endfor %}
+    </ul>
+    <hr>
+{% endfor %} 
+{% endblock body %}

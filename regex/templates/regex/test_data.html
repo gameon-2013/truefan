@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Test Data Management{% endblock title %}
+
+{% block body %}
+<h1>Add Test Data</h1>
+<form class="form" action="{% url 'test_data' %}" method="POST">
+  <p>{{ form.non_field_errors }}</p>
+  <div class="control-group">
+     {{ form.text.errors }}
+     <label for="id_text">Text:</label>
+     <div class="controls">
+        {{ form.text }}
+     </div>
+  </div>
+  <div class="control-group">
+     {{ form.positive.errors }}
+     <label for="id_positive">Is Rugby Tweet?</label>
+     <div class="controls">
+        {{ form.positive }}
+     </div>
+  </div>
+  <div class="form-actions">
+     <button type="submit">Add</button>
+  </div>
+</form>
+
+<hr>
+
+<h1>Test Data</h1>
+{% if data %}
+    {% regroup data|dictsort:"positive" by positive as positive_list %}
+    {% for positive in positive_list %}
+        <h3>{{ positive.grouper }}</h3>
+        <ul>
+        {% for instance in positive.list %}
+            <li>{{ instance.text }} <a href="{% url 'remove_test_data' instance.id %}">&times;</a></li>
+        {% endfor %}
+        </ul>
+    {% endfor %} 
+{% else %}
+   <p class="muted">You have no test data yet</p>
+{% endif %}
+{% endblock body %}

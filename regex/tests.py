@@ -39,10 +39,6 @@ class RegexTest(TestCase):
         for i in self.keywords:
             Keyword.objects.create(value=i[0], weight=i[1])
 
-    def test_regex(self):
-        test_rx = "|".join([k[0] for k in self.keywords])
-        self.assertEqual(test_rx, Keyword.regex(), "Regex did not match")
-
     def test_match(self):
         sample = "This is rugby sevens"
         results = Keyword.match(sample)

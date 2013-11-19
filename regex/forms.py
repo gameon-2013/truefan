@@ -17,3 +17,7 @@ class BulkKeywordForm(forms.Form):
         value = forms.CharField(widget=forms.Textarea)
         weight = forms.DecimalField(max_digits=5, decimal_places=4, min_value=0.0, max_value=1.0)
 
+class TestDataForm(ModelForm):
+    class Meta:
+        model = TestData
+        fields = ('text', 'positive')
