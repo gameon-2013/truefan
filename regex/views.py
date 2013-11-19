@@ -6,27 +6,19 @@ from regex.models import *
 from forms import *
 
 def keywords(request):
-    if request.method != "POST":
-        keywords = Keyword.objects.all()
-        keyword_form = KeywordForm()
-        return render(request, 'regex/keywords.html', {'keywords':keywords, 'form': keyword_form})
-    
-    keyword_form = KeywordForm(request.POST)
+    keyword_form = KeywordForm(request.POST or None)
     if not keyword_form.is_valid():
         keywords = Keyword.objects.all()
         return render(request, 'regex/keywords.html', {'keywords':keywords, 'form': keyword_form})
 
     keyword_value = keyword_form.cleaned_data['value']
-    Keyword.objects.create(value=keyword_value)
+    keyword_weight = keyword_form.cleaned_data['weight']
+    Keyword.objects.create(value=keyword_value, weight=keyword_weight)
 
     return HttpResponseRedirect(reverse("keywords"))
 
 def test_match(request):
-    if request.method != "POST":
-        sample_form = SampleForm()
-        return render(request, 'regex/match.html', {'form': sample_form})
-
-    sample_form = SampleForm(request.POST)
+    sample_form = SampleForm(request.POST or None)
     if not sample_form.is_valid():
         return render(request, 'regex/match.html', {'form': sample_form})
 
@@ -36,20 +28,16 @@ def test_match(request):
     return render(request, 'regex/match.html', {'results': results})
 
 def bulk_keywords(request):
-    if request.method != "POST":
-        keywords = Keyword.objects.all()
-        bulk_form = BulkKeywordForm()
-        return render(request, 'regex/bulk.html', { 'keywords': keywords, 'form': bulk_form })
-    
-    bulk_form = BulkKeywordForm(request.POST)
+    bulk_form = BulkKeywordForm(request.POST or None)
     if not bulk_form.is_valid():
         keywords = Keyword.objects.all()
         return render(request, 'regex/bulk.html', { 'keywords': keywords, 'form': bulk_form })
     
     value = bulk_form.cleaned_data['value']
+    weight = bulk_form.cleaned_data['weight']
     keywds = [i.strip() for i in value.split(',')]
     for keywd in keywds:
-        keyword = Keyword(value=keywd)
+        keyword = Keyword(value=keywd, weight=weight)
         keyword.save()
     
     return HttpResponseRedirect(reverse("bulk_keywords"))
