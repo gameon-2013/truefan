@@ -160,7 +160,7 @@ def user_timeline(request):
         user_tweets = user.rugbytweet_set.all()
         for dTweet in user_tweets:
             tweets.append(dTweet.text)
-        return render_to_response('twyauth/timeline.html', {'tweets':tweets, 'login_url': request.build_absolute_uri(twyauth.LOGOUT_URL),})
+        return render_to_response('twyauth/timeline.html', {'tweets':user_tweets, 'login_url': request.build_absolute_uri(twyauth.LOGOUT_URL),})
     except TwythonAuthError as ex:
         #invalid tokens...get new tokens
         if ex.error_code == 401:

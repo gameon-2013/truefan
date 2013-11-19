@@ -77,9 +77,9 @@ class TwitterProfileTest(TestCase):
     
     def test_analyze_tweets(self):
         """ tests for rugby tweets """
-        keywords = ['rugby', 'safari', 'sevens']
+        keywords = [('rugby',0.9), ('safari', 0.4), ('sevens', 0.6)]
         for k in keywords:
-            Keyword.objects.create(value=k)
+            Keyword.objects.create(value=k[0], weight=k[1])
         
         self.profile.analyze_last_tweets()
         rugby_tweets = RugbyTweet.objects.all()

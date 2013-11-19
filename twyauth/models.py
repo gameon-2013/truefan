@@ -68,7 +68,7 @@ class TwitterProfile(models.Model):
             
             # find rugby tweets
             for tweet in tweets:
-                matches = Keyword.match(tweet['text'])
+                matches, confidence = Keyword.match(tweet['text'])
                 
                 if len(matches) > 0:
                     rugby_tweet = RugbyTweet()
@@ -76,7 +76,7 @@ class TwitterProfile(models.Model):
                     rugby_tweet.tweetid = tweet['id']
                     rugby_tweet.created_at = tweet['created_at']
                     rugby_tweet.matches = ",".join(matches)
-                    rugby_tweet.confidence = len(matches)
+                    rugby_tweet.confidence = confidence
                     rugby_tweet.profile = self
                     
                     rugby_tweet.save()

@@ -12,7 +12,7 @@
 {% if tweets %}
 	<ul>
 	{% for tweet in tweets %}
-		<li> {{ tweet }} </li>
+		<li>{{ tweet.text }} <label class="label {% if tweet.confidence > 0.7 %}label-success{% else %}{% if tweet.confidence <= 0.7 and tweet.confidence > 0.3 %}label-warning{% else %}label-danger{% endif %}{% endif %}">Confidence: {{ tweet.confidence }}</label>&nbsp;<label class="label label-default">Matches: {{ tweet.matches }}</label></li>
 	{% endfor %}
 	</ul>
 {% else %}
