@@ -3,9 +3,8 @@
 {% block title %}Bulk Add Keywords{% endblock title %}
 
 {% block body %}
-<h2>Current Keywords</h2>
-<p>{% for keyword in keywords %}{{ keyword.value }} - <a href="{% url 'remove_keyword' keyword.id %}">Remove</a> {% if not loop.last %},&nbsp;{% endif %}{% endfor %}</p>
-<form action="{% url 'bulk_keywords' %}" method="POST">
+<h1>Add Keywords</h1>
+<form class="form" action="{% url 'bulk_keywords' %}" method="POST">
   <p>{{ form.non_field_errors }}</p>
   <div class="control-group">
      {{ form.value.errors }}
@@ -25,4 +24,13 @@
      <button type="submit">Add</button>
   </div>
 </form>
+
+<hr>
+
+<h1>Current Keywords By Weight</h1>
+{% regroup keywords|dictsortreversed:"weight" by weight as weight_list %}
+{% for weight in weight_list %}
+    <h3>{{ weight.grouper }}</h3>
+    <p>{% for keyword in weight.list %}{{ keyword.value }} <a href="{% url 'remove_keyword' keyword.id %}">&times;</a>{% if not loop.last %}&nbsp;&nbsp;&nbsp;{% endif %}{% endfor %}</p>
+{% endfor %} 
 {% endblock body %}
