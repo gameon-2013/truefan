@@ -3,7 +3,8 @@
 {% block title %}User's Rugby Tweets{% endblock title %}
 {% block nav %}
           <li class="active"><a href="#">Tweets</a></li>
-          <li><a href="/stats">Statistics</a></li>
+          <li><a href="{% url 'stats' %}">Statistics</a></li>
+          <li><a href="{% url 'trivia' %}">Trivia</a></li>
           <li><a href="{% url 'twitter_logout' %}">Logout</a></li>
 {%endblock nav%}
 

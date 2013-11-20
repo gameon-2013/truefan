@@ -36,6 +36,17 @@ def play(request, level=None):
 
 
 def questions(request):
+    if request.method == "POST":
+        frm = QuestionForm(request.POST)
+        if frm.is_valid():
+            q = Question(
+                content = frm.cleaned_data['content'],
+                correct_choice = frm.cleaned_data['correct_choice'],
+                level = frm.cleaned_data['level']
+            )
+            q.save()
+
+#        return HttpResponseRedirect(reverse('questions'))
     queries = Question.objects.all()
     levels = QuestionLevel.objects.all()
     question_frm = QuestionForm()
@@ -46,6 +57,16 @@ def questions(request):
 
 
 def choices(request):
+    if request.method == "POST":
+        frm = ChoiceForm(request.POST)
+        if frm.is_valid():
+            c = Choice(
+                content = frm.cleaned_data['content'],
+                category = frm.cleaned_data['category'],
+            )
+            c.save()
+#        return HttpResponseRedirect(reverse('choices'))
+
     choices = Choice.objects.all()
     categories = ChoiceCategory.objects.all()
     choice_frm = ChoiceForm()
@@ -53,19 +74,6 @@ def choices(request):
     return render_to_response('trivia/choices.html',
                               {'choices': choices, 'categories': categories, 'choice_form': choice_frm,
                                'cat_form': cat_frm})
-
-
-def question_save(request):
-    frm = QuestionForm(request.POST)
-    if frm.is_valid():
-        q = Question(
-            content = frm.cleaned_data['content'],
-            correct_choice = frm.cleaned_data['correct_choice'],
-            level = frm.cleaned_data['level']
-        )
-        q.save()
-
-    return HttpResponseRedirect(reverse('questions'))
 
 
 def question_level_save(request):
@@ -77,18 +85,6 @@ def question_level_save(request):
         ql.save()
 
     return HttpResponseRedirect(reverse('questions'))
-
-
-def choice_save(request):
-    frm = ChoiceForm(request.POST)
-    if frm.is_valid():
-        c = Choice(
-            content = frm.cleaned_data['content'],
-            category = frm.cleaned_data['category'],
-        )
-        c.save()
-
-    return HttpResponseRedirect(reverse('choices'))
 
 
 def choice_cat_save(request):
