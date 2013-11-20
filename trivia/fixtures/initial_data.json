@@ -2,6 +2,8 @@
     { "model": "trivia.ChoiceCategory", "pk": 1, "fields": { "name": "player" }},
     { "model": "trivia.ChoiceCategory", "pk": 2, "fields": { "name": "the game" }},
     { "model": "trivia.ChoiceCategory", "pk": 3, "fields": { "name": "history" }},
+    { "model": "trivia.ChoiceCategory", "pk": 4, "fields": { "name": "Kenya" }},
+    { "model": "trivia.ChoiceCategory", "pk": 5, "fields": { "name": "clubs" }},
 
 
     { "model": "trivia.Choice", "pk": 1, "fields": { "content": "Collins", "category": 1}},
@@ -16,6 +18,22 @@
     { "model": "trivia.Choice", "pk": 10, "fields": { "content": "soccer", "category": 3 }},
     { "model": "trivia.Choice", "pk": 11, "fields": { "content": "basketball", "category": 3 }},
     { "model": "trivia.Choice", "pk": 12, "fields": { "content": "hockey", "category": 3 }},
+    { "model": "trivia.Choice", "pk": 13, "fields": { "content": "7", "category": 2 }},
+    { "model": "trivia.Choice", "pk": 14, "fields": { "content": "14", "category": 2 }},
+    { "model": "trivia.Choice", "pk": 15, "fields": { "content": "19", "category": 2 }},
+    { "model": "trivia.Choice", "pk": 16, "fields": { "content": "17", "category": 2 }},
+    { "model": "trivia.Choice", "pk": 17, "fields": { "content": "scrum", "category": 2 }},
+    { "model": "trivia.Choice", "pk": 18, "fields": { "content": "maul", "category": 2 }},
+    { "model": "trivia.Choice", "pk": 19, "fields": { "content": "penalty kick", "category": 2 }},
+    { "model": "trivia.Choice", "pk": 20, "fields": { "content": "line out", "category": 2 }},
+    { "model": "trivia.Choice", "pk": 21, "fields": { "content": "Starlets", "category": 4 }},
+    { "model": "trivia.Choice", "pk": 22, "fields": { "content": "Shujaas", "category": 4 }},
+    { "model": "trivia.Choice", "pk": 23, "fields": { "content": "Lionesses", "category": 4 }},
+    { "model": "trivia.Choice", "pk": 24, "fields": { "content": "Morans", "category": 4 }},
+    { "model": "trivia.Choice", "pk": 25, "fields": { "content": "Nakuru RFC", "category": 5}},
+    { "model": "trivia.Choice", "pk": 26, "fields": { "content": "Homeboys", "category": 5 }},
+    { "model": "trivia.Choice", "pk": 27, "fields": { "content": "Impala", "category": 5 }},
+    { "model": "trivia.Choice", "pk": 28, "fields": { "content": "Harlequins", "category": 5 }},
 
     { "model": "trivia.QuestionLevel", "pk": 1, "fields": { "name": "easy" }},
     { "model": "trivia.QuestionLevel", "pk": 2, "fields": { "name": "medium" }},
@@ -53,8 +71,44 @@
         "pk": 4,
         "fields": {
             "correct_choice": 10,
-            "level": 1,
+            "level": 2,
             "content": "From which game was rugby created?"
+        }
+    },
+    {
+        "model": "trivia.Question",
+        "pk": 5,
+        "fields": {
+            "content": "How many people are in the field in a seven's game?",
+            "correct_choice":15,
+            "level":2
+        }
+    },
+    {
+        "model": "trivia.Question",
+        "pk": 6,
+        "fields": {
+            "content": "Which set-piece doesn't feature in rugby?",
+            "correct_choice":18,
+            "level":2
+        }
+    },
+    {
+        "model": "trivia.Question",
+        "pk": 7,
+        "fields": {
+            "correct_choice": 23,
+            "level": 1,
+            "content": "What is the team name of the Kenya seven's women's team?"
+        }
+    },
+    {
+        "model": "trivia.Question",
+        "pk": 8,
+        "fields": {
+            "correct_choice": 25,
+            "level": 2,
+            "content": "Which club does Biko Adema play for?"
         }
     }
 ]

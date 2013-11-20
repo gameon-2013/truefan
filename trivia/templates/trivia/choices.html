@@ -41,7 +41,7 @@
         {% endfor %}
         </tbody>
     </table>
-        <form action="{% url 'choice_save' %}" class="form-inline" method="post">
+        <form action="{% url 'choices' %}" class="form-inline" method="post">
         {% for field in choice_form %}
             {{ field.errors }}
             {{ field.label_tag }}: {{ field }}
