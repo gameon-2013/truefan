@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render_to_response
 from django.core.urlresolvers import reverse
+from requests.exceptions import ConnectionError
 
 from twython import Twython
 
@@ -33,20 +34,25 @@ def begin_auth(request):
     """
         The view function that initiates the entire handshake.
     """
-    #no need to login twice
-    if request.user is not None and request.user.is_authenticated():
-        return HttpResponseRedirect(request.build_absolute_uri(reverse("twyauth.views.user_timeline")))
+    try:
+        #no need to login twice
+        if request.user is not None and request.user.is_authenticated():
+            return HttpResponseRedirect(request.build_absolute_uri(reverse("twyauth.views.user_timeline")))
 
-    # Instantiate Twython
-    twitter = Twython(twyauth.TWITTER_KEY, twyauth.TWITTER_SECRET)
+        # Instantiate Twython
+        twitter = Twython(twyauth.TWITTER_KEY, twyauth.TWITTER_SECRET)
 
-    # Request an authorization url to send the user to...
-    callback_url = request.build_absolute_uri(reverse('twyauth.views.thanks'))
-    auth_props = twitter.get_authentication_tokens(callback_url)
+        # Request an authorization url to send the user to...
+        callback_url = request.build_absolute_uri(reverse('twyauth.views.thanks'))
+        auth_props = twitter.get_authentication_tokens(callback_url)
 
-    # redirect user to auth url
-    request.session['request_token'] = auth_props
-    return HttpResponseRedirect(auth_props['auth_url'])
+        # redirect user to auth url
+        request.session['request_token'] = auth_props
+        return HttpResponseRedirect(auth_props['auth_url'])
+    except ConnectionError, ce:
+        return render_to_response('error.html', { 'error_message' : 'Could not connect to twitter. Check your network connection' })
+    except Exception, ex:
+        return render_to_response('error.html', { 'error_message' : str(ex)})
 
 
 def thanks(request):
