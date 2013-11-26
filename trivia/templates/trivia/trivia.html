@@ -9,7 +9,9 @@
                     <li>
                         <div>
                             <p>{{ q.question.content }}</p>
-                            {% for c in q.choices %}<input type="radio" style="margin-left:10px;" value="{{ c.id }}"/>{{ c.content }}{% endfor %}
+                            {% for c in q.choices %}
+                                <input type="radio" style="margin-left:10px;" value="{{ c.id }}"/>{{ c.content }}
+                            {% endfor %}
                         </div>
                     </li>
                 {% endfor %}

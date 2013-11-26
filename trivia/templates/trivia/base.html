@@ -3,8 +3,10 @@
 {% block body %}
     <div>
         <a class="btn" href="{% url 'play' %}">Play trivia</a>
-        <a class="btn"  href="{% url 'questions' %}">Questions</a>
-        <a class="btn"  href="{% url 'choices' %}">Choices</a>
+        {% if user.is_authenticated %}
+            <a class="btn" href="{% url 'questions' %}">Questions</a>
+            <a class="btn" href="{% url 'choices' %}">Choices</a>
+        {% endif %}
     </div>
     {% block trivia_body %}{% endblock %}
 {% endblock %}

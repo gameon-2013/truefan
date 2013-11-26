@@ -4,6 +4,7 @@
     { "model": "trivia.ChoiceCategory", "pk": 3, "fields": { "name": "history" }},
     { "model": "trivia.ChoiceCategory", "pk": 4, "fields": { "name": "Kenya" }},
     { "model": "trivia.ChoiceCategory", "pk": 5, "fields": { "name": "clubs" }},
+    { "model": "trivia.ChoiceCategory", "pk": 6, "fields": { "name": "countries" }},
 
 
     { "model": "trivia.Choice", "pk": 1, "fields": { "content": "Collins", "category": 1}},
@@ -34,6 +35,10 @@
     { "model": "trivia.Choice", "pk": 26, "fields": { "content": "Homeboys", "category": 5 }},
     { "model": "trivia.Choice", "pk": 27, "fields": { "content": "Impala", "category": 5 }},
     { "model": "trivia.Choice", "pk": 28, "fields": { "content": "Harlequins", "category": 5 }},
+    { "model": "trivia.Choice", "pk": 28, "fields": { "content": "Australia", "category": 6 }},
+    { "model": "trivia.Choice", "pk": 28, "fields": { "content": "New Zealand", "category": 6 }},
+    { "model": "trivia.Choice", "pk": 28, "fields": { "content": "England", "category": 6 }},
+    { "model": "trivia.Choice", "pk": 28, "fields": { "content": "South Africa", "category": 6 }},
 
     { "model": "trivia.QuestionLevel", "pk": 1, "fields": { "name": "easy" }},
     { "model": "trivia.QuestionLevel", "pk": 2, "fields": { "name": "medium" }},
@@ -106,7 +111,7 @@
         "model": "trivia.Question",
         "pk": 8,
         "fields": {
-            "correct_choice": 25,
+            "correct_choice": 27,
             "level": 2,
             "content": "Which club does Biko Adema play for?"
         }
