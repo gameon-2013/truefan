@@ -1,0 +1,12 @@
+<div class="control-group">
+    <div class="controls">
+        <p>{{ q.question.content }}</p>
+        {% for c in q.choices %}
+            <label class="radio-inline">
+                <input required="required" type="radio" name="choices_{{ q.question.id }}" style="margin-left:10px;"
+                       value="{{ c.id }}"/> {{ c.content }}
+            </label>
+        {% endfor %}
+    </div>
+    <span class="help-inline"><i class="icon-ok"></i></span>
+</div>

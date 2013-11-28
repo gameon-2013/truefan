@@ -6,18 +6,19 @@ from views import choices
 from views import play
 from views import question_level_save
 from views import choice_cat_save
-
+from views import score
 
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
 # admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^trivia/play/$', play, name="play"),
-    url(r'^trivia/play/([A-Z a-z]+)/$', play, name="play"),
-    url(r'^trivia/$', play, name="trivia"),
-    url(r'^trivia/questions/$', questions, name="questions"),
-    url(r'^trivia/choices/$', choices, name="choices"),
-    url(r'^trivia/quest_lvl_save/$', question_level_save, name="question_level_save"),
-    url(r'^trivia/choice_cat_save/$', choice_cat_save, name="choice_cat_save"),
+                       url(r'^trivia/$', play, name="trivia"),
+                       url(r'^trivia/play/$', play, name="play"),
+                       url(r'^trivia/score/([A-Z a-z]+)/$', score, name="score"),
+                       url(r'^trivia/play/([A-Z a-z]+)/$', play, name="play"),
+                       url(r'^trivia/questions/$', questions, name="questions"),
+                       url(r'^trivia/choices/$', choices, name="choices"),
+                       url(r'^trivia/quest_lvl_save/$', question_level_save, name="question_level_save"),
+                       url(r'^trivia/choice_cat_save/$', choice_cat_save, name="choice_cat_save"),
 )

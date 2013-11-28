@@ -1,0 +1,16 @@
+{% extends 'trivia/base.html' %}
+{% block trivia_title %}Score{% endblock %}
+{% block trivia_body %}
+    <h4>Trivia Score</h4>
+    <p>Level : {{ level }}</p>
+    <p>Score : {{ score }}</p>
+    <p>{{ correct }}/{{ total }} questions were answered correct</p>
+    <ul style="list-style-type: decimal">
+        {% for q in queries %}
+            <li>
+                <p>{{ q.question.content }}</p>
+                {{ q.question.correct_choice }} == {{ q.selected }}
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

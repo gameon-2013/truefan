@@ -1,12 +1,22 @@
 {% extends 'base.html' %}
+
 {% block title %}Trivia - {% block trivia_title %}{% endblock %} {% endblock %}
-{% block body %}
-    <div>
+{% block nav %}
+    <li {% if active_tab == 'play' %}class="active"{% endif %}>
         <a class="btn" href="{% url 'play' %}">Play trivia</a>
-        {% if user.is_authenticated %}
-            <a class="btn" href="{% url 'questions' %}">Questions</a>
-            <a class="btn" href="{% url 'choices' %}">Choices</a>
-        {% endif %}
-    </div>
+    </li>
+    <li {% if active_tab == 'questions' %}class="active"{% endif %}>
+        <a class="btn" href="{% url 'questions' %}">Questions</a>
+    </li>
+    <li {% if active_tab == 'choices' %}class="active"{% endif %}>
+        <a class="btn" href="{% url 'choices' %}">Choices</a>
+    </li>
+    {% if user.is_authenticated %}
+        <li><a href="{% url 'twitter_logout' %}">Logout</a></li>
+    {% else %}
+        <li><a href="/">Login</a></li>
+    {% endif %}
+{% endblock %}
+{% block body %}
     {% block trivia_body %}{% endblock %}
 {% endblock %}

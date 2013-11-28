@@ -120,6 +120,7 @@ TEMPLATE_DIRS = (
 
 TEMPLATE_CONTEXT_PROCESSORS = (
      'django.core.context_processors.request',
+     'django.contrib.auth.context_processors.auth',
 )
 
 INSTALLED_APPS = (
@@ -131,7 +132,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'regex',
     # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
+    'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     "twyauth",
