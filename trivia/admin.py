@@ -1,4 +1,4 @@
-__author__ = 'barbossa'
+__author__ = 'mbacho'
 from models import Choice
 from models import ChoiceCategory
 from models import Question
