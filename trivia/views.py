@@ -1,5 +1,3 @@
-from django.http.response import HttpResponse
-
 __author__ = 'mbacho'
 # Create your views here.
 
@@ -20,6 +18,41 @@ from forms import ChoiceCategoryForm
 from forms import TriviaForm
 
 
+def get_queries(form):
+    data = form.data
+    query_ids = [i[i.index('_') + 1:] for i in data.keys()]
+    val_ids = [int(i) for i in data.values()]
+    queries = []
+    l = len(form.data)
+    for i in range(0, l, 1):
+        q = Question.objects.get(id=int(query_ids[i]))
+        obj = {'question': q, 'correct': q.correct_choice_id == val_ids[i]}
+        if obj['correct']:
+            obj['selected'] = q.correct_choice
+        else:
+            obj['selected'] = Choice.objects.get(id=int(val_ids[i]))
+        queries.append(obj)
+    return queries
+
+
+def score(request, level):
+    if request.method != "POST":
+        return HttpResponseRedirect('play')
+
+    frm = TriviaForm(request.POST or None)
+    if not frm.is_valid():
+        return render_to_response('trivia/trivia.html', {'trivia_frm': frm})
+
+    queries = get_queries(frm)
+    total_correct = reduce(lambda x, y: x + (1 if y['correct'] else 0), queries, 0)
+    lvl = QuestionLevel.objects.get(name=level)
+    total_score = lvl.points * total_correct
+    return render_to_response('trivia/score.html', {
+        'correct': total_correct, 'total': len(queries),
+        'score': total_score, 'queries': queries, 'level': lvl
+    })
+
+
 def play(request, level=None):
     if level is None:
         levels = QuestionLevel.objects.all()
@@ -36,12 +69,13 @@ def play(request, level=None):
             choice_cats = list(choice_qry)
             choice_cats.append(i.correct_choice)
             shuffle(choice_cats)
-            obj = {'question': i, 'choices': choice_cats, 'selected': None}
+            obj = {'question': i, 'choices': choice_cats, 'choice_qry': choice_qry, 'selected': None}
             query_choices.append(obj)
-        frm = None #TriviaForm(queries=query_choices)
 
+        frm = TriviaForm()
+        frm.setup_queries(query_choices)
         return render_to_response('trivia/trivia.html',
-                                  {'level': level, 'questions': query_choices, 'user': request.user,
+                                  {'level': level, 'questions': query_choices,'len':len(query_choices), 'user': request.user,
                                    'active_tab': 'play', 'trivia_form': frm})
     except Exception, ex:
         return render_to_response('error.html', {'error_message': str(ex)})

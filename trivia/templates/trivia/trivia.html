@@ -4,20 +4,24 @@
     <h4>Play trivia</h4>
     {% if level %}<p>Level : {{ level }}</p>
         {% if questions %}
-            <form action="{% url 'play' %}{{ level }}/" method="post">
-                <ul style="list-style-type: decimal">
-                    {% for q in questions %}
-                        <li>
-                            {% include 'trivia/trivia_question.html' with q=q %}
-                        </li>
-                    {% endfor %}
-                </ul>
-                <div class="form-actions">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                    <button type="reset" class="btn">Reset</button>
-                    <a href="{% url 'play' %}" class="btn">Try another</a>
-                </div>
-            </form>
+            {% if len > 0 %}
+                <form action="{% url 'score' level %}" method="post">
+                    <ul style="list-style-type: decimal">
+                        {% for q in questions %}
+                            <li>
+                                {% include 'trivia/trivia_question.html' with q=q %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="reset" class="btn">Reset</button>
+                    </div>
+                </form>
+            {% else %}
+                <p>No questions available for this level</p>
+            {% endif %}
+            <a href="{% url 'play' %}" class="btn">Try another</a>
         {% endif %}
     {% elif levels %}
         <p>Select a level to play</p>

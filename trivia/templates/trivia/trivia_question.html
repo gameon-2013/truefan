@@ -3,7 +3,7 @@
         <p>{{ q.question.content }}</p>
         {% for c in q.choices %}
             <label class="radio-inline">
-                <input required="required" type="radio" name="{{ q.question.id }}" style="margin-left:10px;"
+                <input required="required" type="radio" name="choices_{{ q.question.id }}" style="margin-left:10px;"
                        value="{{ c.id }}"/> {{ c.content }}
             </label>
         {% endfor %}

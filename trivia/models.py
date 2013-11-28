@@ -1,6 +1,7 @@
 __author__ = 'mbacho'
 
 from django.db import models
+from twyauth.models import User
 
 # Create your models here.
 
@@ -21,6 +22,7 @@ class Choice(models.Model):
 
 class QuestionLevel(models.Model):
     name = models.CharField(max_length=20, unique=True)
+    points = models.PositiveSmallIntegerField(default=3)
 
     def __unicode__(self):
         return self.name
@@ -35,3 +37,9 @@ class Question(models.Model):
     def __unicode__(self):
         return self.content
 
+class UserPoints(models.Model):
+    user = models.ForeignKey(User)
+    points = models.PositiveIntegerField(default=0)
+
+    def __unicode__(self):
+        return "{0}  {1} points".format(self.user.username, self.points)

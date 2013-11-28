@@ -27,17 +27,21 @@ class ChoiceCategoryForm(forms.ModelForm):
 
 
 class TriviaForm(forms.Form):
-    def __init__(self, queries, *args, **kwargs):
-        super(TriviaForm, self).__init__(*args, **kwargs)
+    def setup_queries(self,queries):
         if queries is None:
             raise Exception("queries not specified")
 
         for i in queries:
-            self.fields['question_%i' % i['question'].id] = forms.CharField()#forms.HiddenInput()
-            self.fields['choices_%i' % i['question'].id] = \
-                forms.ModelChoiceField(queryset=i['choices'],
-                                       widget=forms.RadioSelect,
-                                       empty_label=None)
-            self.fields['selected_%i' % i['question'].correct_choice.id] = forms.CharField()#forms.HiddenInput()
+            q_id = i['question'].id
+            #self.fields['question_%i' % q_id] = forms.IntegerField(label='question_%i' % q_id,initial=q_id,required=True)
+            #self.fields['question_%i' % q_id].widget = forms.HiddenInput()
+            self.fields['choices_%i' % q_id] = \
+                forms.ModelChoiceField(queryset=i['choice_qry'],
+                                       widget=forms.RadioSelect(),
+                                       empty_label=None,
+                                       label=i['question'].content,
+                                       )
 
-
+#class TriviaFormSet(forms.BaseFormSet):
+#    def add_field(self,form,,,
+    
