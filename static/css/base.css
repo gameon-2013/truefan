@@ -4,8 +4,8 @@ h1, h2, h3, h4{
 
 /* Space out content a bit */
 body {
-  padding-top: 20px;
-  padding-bottom: 20px;
+  //padding-top: 20px;
+padding-bottom: 20px;
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
@@ -83,12 +83,7 @@ body {
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
   /* Remove the padding we set earlier */
-  .header,
-  .marketing,
-  .footer {
-    padding-left: 0;
-    padding-right: 0;
-  }
+  
   /* Space out the masthead */
   .header {
     margin-bottom: 30px;
@@ -96,6 +91,64 @@ body {
   /* Remove the bottom border on the jumbotron for visual effect */
   .jumbotron {
     border-bottom: 0;
+    margin-top:27%;
+    padding-top: 10%;   
+    margin-bottom: 10%; 
   }
+
+  #oneliner {
+      display:inline-block;
+      vertical-align: bottom;
+      color: #ff6022;
+  }
+  #alignnav{
+    vertical-align: bottom;    
+  }
+  .nav {    
+    margin-top: 5%;
 }
+.twitterfeeds{
+  background: white;   
+}
+.twitter-timeline{
+  width: 100%;
+  padding: 0;
+  margin:0;
+  height: 300px;
+}
+.bodyblock{
+  margin-top:25%;  
+}
+.header{
+  position: fixed;
+  display: block;
+  background: white;
+  width: 700px;
+  margin-top: 0px;
+  padding-top: 20px;
+  z-index: 1000;
+}
+.abouttruefan h2{
+    color: black;
+}
+.abouttruefan span{
+
+}
+.jumbotron .login{
+  margin-top:20%;
+  padding-top: 100px;
+
+}
+.about{
+  margin-bottom: 10%;
+}
+.fan{
+  /*background-color: #ff6022;*/
+  color: #ff6022;
+}
+.login #true{
+  /*background-color: #4099ff;
+  color: white;*/
+}
+
 
