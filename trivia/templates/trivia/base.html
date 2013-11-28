@@ -2,6 +2,9 @@
 
 {% block title %}Trivia - {% block trivia_title %}{% endblock %} {% endblock %}
 {% block nav %}
+    <li>
+        <a class="btn" href="{% url 'home' %}">Home</a>
+    </li>
     <li {% if active_tab == 'play' %}class="active"{% endif %}>
         <a class="btn" href="{% url 'play' %}">Play trivia</a>
     </li>
