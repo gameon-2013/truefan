@@ -9,8 +9,8 @@
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
           ['Description', 'Percentage'],
-          ['Rugby related',  40],
-          ['Non-rugby related',  60]
+          ['Rugby related',  {{rugby_related_tweets }} ],
+          ['Non-rugby related',  {{non_rugby_related_tweets }}]
         ]);
 
         var options = {
@@ -39,8 +39,8 @@
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
           ['Description', 'Percentage'],
-          ['Correct',  60],
-          ['Not Correct', 40]
+          ['Correct',  {{ correct_trivia_questions }}],
+          ['Not Correct', {{ incorrect_trivia_questions }}]
         ]);
 
         var options = {

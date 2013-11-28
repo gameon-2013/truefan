@@ -9,6 +9,7 @@ urlpatterns = patterns('',
     url(r'', include('regex.urls')),
     url(r'', include('trivia.urls')),
     url(r'^django-rq/', include('django_rq.urls')),
+    #url(r'', include('stats.urls')),
     # Examples:
     # url(r'^$', 'truefan.views.home', name='home'),
     # url(r'^truefan/', include('truefan.foo.urls')),

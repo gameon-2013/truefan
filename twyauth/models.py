@@ -16,6 +16,7 @@ class TwitterProfile(models.Model):
     oauth_token = models.CharField(max_length=200)
     oauth_secret = models.CharField(max_length=200)
     since_id = models.BigIntegerField(null=True)
+    total_tweets_pulled = models.PositiveIntegerField(max_length=10, null=True, default=0)
     
     def get_api(self):
         return Twython(twyauth.TWITTER_KEY, twyauth.TWITTER_SECRET,
@@ -52,6 +53,8 @@ class TwitterProfile(models.Model):
                 last_id = possible_last_id
                 req_tweets = api.get_user_timeline(max_id=last_id)
                 
+        self.total_tweets_pulled += len(tweets)
+        self.save()
         return tweets
     
     def analyze_last_tweets(self, tweet_limit=twyauth.TWEET_LIMIT):
@@ -93,3 +96,53 @@ class RugbyTweet(models.Model):
     
     def __str__(self):
         return self.text + ": "+self.matches
+
+class Truefan_stats(object):
+
+    def tweets_points(self, profile_id):
+        """
+            calculate the stats of rugby related & non-related
+            tweets
+        """
+        #import pdb
+        #pdb.set_trace()
+        all_tweets = RugbyTweet.objects.filter(profile=profile_id)
+        tweets_count = len(all_tweets)
+        rating_points = self.point_checker(len(all_tweets))
+
+        from decimal import Decimal
+        try:
+            sum_points = 0
+            for i in all_tweets:
+                sum_points += i.confidence * Decimal(self.point_checker(sum_points))
+        except Exception, e:
+            pass
+
+        return sum_points
+
+
+    def rugby_tweets_stats(self, profile_id):
+        """
+            ruj tweets/total no of tweets
+        """
+        rugbyTweet = RugbyTweet.objects.filter(profile_id=profile_id)
+        pulled_tweets = TwitterProfile.objects.get(user_id=profile_id)
+
+        rugby_related_tweets = non_rugby_related_tweets = 0
+        try:
+            rugby_related_tweets = len(rugbyTweet)
+            non_rugby_related_tweets = pulled_tweets.total_tweets_pulled - len(rugbyTweet)
+        except Exception, e:
+            pass
+
+        return {"rugby_related_tweets": rugby_related_tweets,
+                "non_rugby_related_tweets": non_rugby_related_tweets}
+
+
+    def point_checker(self,total_points):
+        if total_points >=0 and total_points <= 1001:
+            return 10
+        elif total_points >= 1001 and total_points <= 2001:
+            return 8
+        elif total_points > 2001:
+            return 6

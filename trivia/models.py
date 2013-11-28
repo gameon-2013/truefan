@@ -40,6 +40,8 @@ class Question(models.Model):
 class UserPoints(models.Model):
     user = models.OneToOneField(User)
     points = models.PositiveIntegerField(default=0)
+    questions_solved = models.PositiveIntegerField(default=0)
+    correct_questions = models.PositiveIntegerField(default=0)
 
     def __unicode__(self):
         return "{0}  {1} points".format(self.user.username, self.points)
