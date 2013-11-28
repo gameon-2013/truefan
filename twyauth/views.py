@@ -193,5 +193,24 @@ def get_tweets(api, tweet_limit=twyauth.TWEET_LIMIT):
 
 def stats(request):
     #show statistics
-        return render_to_response('twyauth/stats.html')
+
+    from twyauth.models import Truefan_stats
+    stats = Truefan_stats(request.user.id)
+
+    #my tweets section
+    tweets = stats.rugby_tweets_stats()
+    from pprint import pprint
+    pprint(tweets)
+
+    #my trivia section
+    
+
+    #points earned
+    points = Truefan_stats(request.user.id)
+    points_earned = points.tweets_stats()
+
+    return render_to_response('twyauth/stats.html',
+                              {'rugby_related_tweets': tweets['rugby_related_tweets'],
+                               'non_rugby_related_tweets': tweets['non_rugby_related_tweets']})
+
 
