@@ -192,7 +192,10 @@ def get_tweets(api, tweet_limit=twyauth.TWEET_LIMIT):
     return tweets
 
 def stats(request):
-    #show statistics
+
+    if not request.user.is_authenticated():
+        login_url = request.build_absolute_uri(reverse('home'))
+        return HttpResponseRedirect(login_url)
 
     from twyauth.models import Truefan_stats
     stats = Truefan_stats()
@@ -213,6 +216,13 @@ def stats(request):
     except Exception, ex:
         pass
 
+    try_trivia = 'none'
+    hide_trivia_chart = 'block'
+    if correct_questions <= 0 and user_points.questions_solved <= 0:
+        try_trivia = 'block'
+        hide_trivia_chart = 'none'
+
+
     #points earned
     points_earned = stats.tweets_points(request.user.id)
 
@@ -220,6 +230,8 @@ def stats(request):
                               {'rugby_related_tweets': tweets['rugby_related_tweets'],
                                'non_rugby_related_tweets': tweets['non_rugby_related_tweets'],
                                'correct_trivia_questions': correct_questions,
-                               'incorrect_trivia_questions': incorrect_questions})
+                               'incorrect_trivia_questions': incorrect_questions,
+                               'try_trivia' : try_trivia,
+                               'hide_trivia_chart': hide_trivia_chart})
 
 

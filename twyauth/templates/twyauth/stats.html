@@ -44,7 +44,7 @@
         ]);
 
         var options = {
-          title: 'My Trivia',
+          /*title: 'My Trivia',*/
           is3D: true,
           titleTextStyle: { 
               color: '#3498db',
@@ -55,7 +55,7 @@
               color: '#3498db', 
               fontSize: 16}
             },
-          colors:['#FB4C39','#3498db']
+          colors:['#3498db','#FB4C39']
         };
 
         var chart = new google.visualization.PieChart(document.getElementById('trivia'));
@@ -111,7 +111,18 @@
 <h3>Frequency of rugby related tweets: 2 days </h3>
 
 <hr />
-<div id="trivia" style="width: 500px; height: 300px;"></div> 
+
+<h3>My Trivia </h3>
+<div id="trivia" style="width: 500px; height: 300px; display: {{ hide_trivia_chart }}"></div>
+
+<div id="no_trivia_points" style="display: {{ try_trivia }} ">
+    seems like you haven't checked out our trivia!
+{#      <h4><a href="{% url 'trivia' %}">try trivia</a></h4>#}
+    <p>
+        <a class="btn btn-lg btn-success" id="try_trivia" href="{% url 'trivia' %}">Try Trivia</a>
+    </p>
+
+</div>
 
 <hr />
 
