@@ -13,7 +13,7 @@ sched = Scheduler()
 
 @sched.interval_schedule(minutes=60)
 def timed_job():
-    result = q.enqueue(analyze_all_profile_tweets)
+    q.enqueue_call(func=analyze_all_profile_tweets, result_ttl=0)
 
 sched.start()
 
