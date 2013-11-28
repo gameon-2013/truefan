@@ -3,15 +3,29 @@
 {% block title %}True Fan{% endblock title %}
 
 {% block nav %}
-    <li class="active"><a href="#">Home</a></li>
-    <li><a href="#">About</a></li>
-    <li><a href="#">Contact</a></li>
+    <li class="active"><a onclick=scrollToA(el('login')) href="#">Home</a></li>
+    <li><a onclick=scrollToA(el('about')) href="#" >About</a></li>    
 {%endblock nav%}
 {% block body %}
-    <div class="jumbotron">
-        <h1>TrueFan</h1>
+<section id = "login" >
+    <div class="jumbotron login">
+        <h1><span id="true">True</span><span class="fan">Fan</span></h1>
         <p class="lead">Are you a rugby fanatic? Prove your loyalty with TrueFan</p>
         <p ><a class="btn btn-lg btn-success" id ="loginbutton" href= "{{ login_url }}">Login with twitter</a></p>
-    </div>      
+    </div>
+</section>
+<section id="about">
+    <div class="twitterfeed">
+    	<div class = "about">
+    		<h2 class = "abouttruefan">About</h2>
+    		<p>True<span class="fan">Fan</span> computes how much of a true fanatic of rugby you are by checking you twitter posts and aggregating points from other TrueFan apps. Show off to your friends how much you love rugby.</p>
+    	</div>
+    	<a class="twitter-timeline" href="https://twitter.com/TrueFan_App" data-widget-id="406025356210999296">Tweets by @TrueFan_App</a>
+		<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+
+
+    </div>
+</section>      
 
 {% endblock body %}
