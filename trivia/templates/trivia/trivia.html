@@ -3,6 +3,9 @@
 {% block trivia_body %}
     <h4>Play trivia</h4>
     {% if level %}<p>Level : {{ level }}</p>
+        {% if not user.is_authenticated %}
+            <p class="alert alert-info">You are not logged in. Your score will not be saved</p>
+        {% endif %}
         {% if questions %}
             {% if len > 0 %}
                 <form action="{% url 'score' level %}" method="post">

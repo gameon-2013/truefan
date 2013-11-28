@@ -11,6 +11,7 @@ from models import Question
 from models import QuestionLevel
 from models import Choice
 from models import ChoiceCategory
+from models import UserPoints
 from forms import QuestionLevelForm
 from forms import QuestionForm
 from forms import ChoiceForm
@@ -47,9 +48,21 @@ def score(request, level):
     total_correct = reduce(lambda x, y: x + (1 if y['correct'] else 0), queries, 0)
     lvl = QuestionLevel.objects.get(name=level)
     total_score = lvl.points * total_correct
+    total_questions = len(queries)
+
+    user = request.user
+    if user.is_authenticated():
+        userscore = None
+        try:
+            userscore = UserPoints.objects.get(user=user.id)
+        except:
+            userscore = UserPoints(user=user)
+        userscore.points += total_score
+        userscore.save()
     return render_to_response('trivia/score.html', {
-        'correct': total_correct, 'total': len(queries),
-        'score': total_score, 'queries': queries, 'level': lvl
+        'correct': total_correct, 'total': total_questions,
+        'score': total_score, 'queries': queries, 'level': lvl,
+        'active_tab': 'play','perc':(total_correct/total_questions)
     })
 
 
@@ -75,7 +88,7 @@ def play(request, level=None):
         frm = TriviaForm()
         frm.setup_queries(query_choices)
         return render_to_response('trivia/trivia.html',
-                                  {'level': level, 'questions': query_choices,'len':len(query_choices), 'user': request.user,
+                                  {'level': level, 'questions': query_choices,'len':len(query_choices),
                                    'active_tab': 'play', 'trivia_form': frm})
     except Exception, ex:
         return render_to_response('error.html', {'error_message': str(ex)})
@@ -120,7 +133,7 @@ def choices(request):
     cat_frm = ChoiceCategoryForm()
     return render_to_response('trivia/choices.html',
                               {'choices': choices, 'categories': categories, 'choice_form': choice_frm,
-                               'cat_form': cat_frm, 'user': request.user, 'active_tab': 'choices'})
+                               'cat_form': cat_frm, 'active_tab': 'choices'})
 
 
 # @login_required(login_url='/')
