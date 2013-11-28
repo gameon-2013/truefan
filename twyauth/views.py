@@ -93,7 +93,7 @@ def thanks(request):
         profile.save()
         
         queue = django_rq.get_queue()
-        queue.enqueue(analyze_profile_tweets, profile)
+        queue.enqueue_call(func=analyze_profile_tweets, args=(profile,), result_ttl=0)
 
     user = authenticate(
         username=authorized_tokens['screen_name'],
@@ -126,7 +126,7 @@ def phase2_auth(request, authorized_tokens):
         profile.save()
         
         queue = django_rq.get_queue()
-        queue.enqueue(analyze_profile_tweets, profile)
+        queue.enqueue_call(func=analyze_profile_tweets, args=(profile,), result_ttl=0)
 
         #authenticate & login
         user = authenticate(
