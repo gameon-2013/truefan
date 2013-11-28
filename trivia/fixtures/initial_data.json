@@ -4,11 +4,12 @@
     { "model": "trivia.ChoiceCategory", "pk": 3, "fields": { "name": "history" }},
     { "model": "trivia.ChoiceCategory", "pk": 4, "fields": { "name": "Kenya" }},
     { "model": "trivia.ChoiceCategory", "pk": 5, "fields": { "name": "clubs" }},
+    { "model": "trivia.ChoiceCategory", "pk": 6, "fields": { "name": "countries" }},
 
 
     { "model": "trivia.Choice", "pk": 1, "fields": { "content": "Collins", "category": 1}},
     { "model": "trivia.Choice", "pk": 2, "fields": { "content": "Andrew", "category": 1}},
-    { "model": "trivia.Choice", "pk": 3, "fields": { "content": "Humpfrey", "category": 1}},
+    { "model": "trivia.Choice", "pk": 3, "fields": { "content": "Humphrey", "category": 1}},
     { "model": "trivia.Choice", "pk": 4, "fields": { "content": "Biko", "category": 1}},
     { "model": "trivia.Choice", "pk": 5, "fields": { "content": "H-post", "category": 2}},
     { "model": "trivia.Choice", "pk": 6, "fields": { "content": "try-post", "category": 2 }},
@@ -34,6 +35,21 @@
     { "model": "trivia.Choice", "pk": 26, "fields": { "content": "Homeboys", "category": 5 }},
     { "model": "trivia.Choice", "pk": 27, "fields": { "content": "Impala", "category": 5 }},
     { "model": "trivia.Choice", "pk": 28, "fields": { "content": "Harlequins", "category": 5 }},
+    { "model": "trivia.Choice", "pk": 28, "fields": { "content": "Australia", "category": 6 }},
+    { "model": "trivia.Choice", "pk": 28, "fields": { "content": "New Zealand", "category": 6 }},
+    { "model": "trivia.Choice", "pk": 28, "fields": { "content": "England", "category": 6 }},
+    { "model": "trivia.Choice", "pk": 28, "fields": { "content": "South Africa", "category": 6 }},
+    { "model": "trivia.Choice", "pk": 29, "fields": { "content": "He misses the next game", "category": 2 }},
+    { "model": "trivia.Choice", "pk": 30, "fields": { "content": "Continues to play after the warning", "category": 2 }},
+    { "model": "trivia.Choice", "pk": 31, "fields": { "content": "He's taken to disciplinary by KRU", "category": 2 }},
+    { "model": "trivia.Choice", "pk": 32, "fields": { "content": "He leaves the field for 10 minutes", "category": 2 }},
+    { "model": "trivia.Choice", "pk": 33, "fields": { "content": "He leaves the field for 2 minutes", "category": 2 }},
+    { "model": "trivia.Choice", "pk": 34, "fields": { "content": "Gets a warning and continues to play", "category": 2 }},
+    { "model": "trivia.Choice", "pk": 35, "fields": { "content": "True", "category": 2 }},
+    { "model": "trivia.Choice", "pk": 36, "fields": { "content": "False", "category": 2 }},
+    { "model": "trivia.Choice", "pk": 37, "fields": { "content": "Scrum half", "category": 2 }},
+    { "model": "trivia.Choice", "pk": 38, "fields": { "content": "Fly-half", "category": 2 }},
+    { "model": "trivia.Choice", "pk": 39, "fields": { "content": "Hooker", "category": 2 }},
 
     { "model": "trivia.QuestionLevel", "pk": 1, "fields": { "name": "easy" }},
     { "model": "trivia.QuestionLevel", "pk": 2, "fields": { "name": "medium" }},
@@ -106,9 +122,46 @@
         "model": "trivia.Question",
         "pk": 8,
         "fields": {
-            "correct_choice": 25,
+            "correct_choice": 27,
             "level": 2,
             "content": "Which club does Biko Adema play for?"
         }
-    }
+    },
+    {
+        "model": "trivia.Question",
+        "pk": 9,
+        "fields": {
+            "correct_choice": 31,
+            "level": 3,
+            "content": "What happens when a player is given a red card in 15s?"
+        }
+    },
+    {
+        "model": "trivia.Question",
+        "pk": 10,
+        "fields": {
+            "correct_choice": 33,
+            "level": 3,
+            "content": "What happens when a player is given a yellow card in 7s?"
+        }
+    },
+    {
+        "model": "trivia.Question",
+        "pk": 11,
+        "fields": {
+            "correct_choice": 36,
+            "level": 3,
+            "content": "Rugby standards demand that a game be played in high altitude. True or False?"
+        }
+    },
+    {
+        "model": "trivia.Question",
+        "pk": 12,
+        "fields": {
+            "correct_choice": 38,
+            "level": 3,
+            "content": "The player number 10 is?"
+        }
+    },
 ]
+
