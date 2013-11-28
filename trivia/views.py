@@ -42,7 +42,7 @@ def score(request, level):
 
     frm = TriviaForm(request.POST or None)
     if not frm.is_valid():
-        return render_to_response('trivia/trivia.html', {'trivia_frm': frm})
+        return render_to_response('trivia/trivia.html', {'trivia_frm': frm,'user':request.user})
 
     queries = get_queries(frm)
     total_correct = reduce(lambda x, y: x + (1 if y['correct'] else 0), queries, 0)
@@ -54,7 +54,7 @@ def score(request, level):
     if user.is_authenticated():
         userscore = None
         try:
-            userscore = UserPoints.objects.get(user=user.id)
+            userscore = UserPoints.objects.get(user=user)
         except:
             userscore = UserPoints(user=user)
         userscore.points += total_score
@@ -64,14 +64,14 @@ def score(request, level):
     return render_to_response('trivia/score.html', {
         'correct': total_correct, 'total': total_questions,
         'score': total_score, 'queries': queries, 'level': lvl,
-        'active_tab': 'play','perc':(total_correct/total_questions)
+        'active_tab': 'play','perc':(total_correct/total_questions),'user':user
     })
 
 
 def play(request, level=None):
     if level is None:
         levels = QuestionLevel.objects.all()
-        return render_to_response('trivia/trivia.html', {'levels': levels, 'active_tab': 'play'})
+        return render_to_response('trivia/trivia.html', {'levels': levels,'user':request.user, 'active_tab': 'play'})
 
     selected_level = QuestionLevel.objects.get(name=level)
     queries = list(Question.objects.filter(level=selected_level.id))
@@ -91,7 +91,7 @@ def play(request, level=None):
         frm.setup_queries(query_choices)
         return render_to_response('trivia/trivia.html',
                                   {'level': level, 'questions': query_choices,'len':len(query_choices),
-                                   'active_tab': 'play', 'trivia_form': frm})
+                                   'user':request.user, 'active_tab': 'play', 'trivia_form': frm})
     except Exception, ex:
         return render_to_response('error.html', {'error_message': str(ex)})
 
@@ -135,7 +135,7 @@ def choices(request):
     cat_frm = ChoiceCategoryForm()
     return render_to_response('trivia/choices.html',
                               {'choices': choices, 'categories': categories, 'choice_form': choice_frm,
-                               'cat_form': cat_frm, 'active_tab': 'choices'})
+                               'user':request.user, 'cat_form': cat_frm, 'active_tab': 'choices'})
 
 
 # @login_required(login_url='/')
