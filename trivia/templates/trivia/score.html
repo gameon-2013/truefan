@@ -1,16 +1,32 @@
 {% extends 'trivia/base.html' %}
+
 {% block trivia_title %}Score{% endblock %}
 {% block trivia_body %}
     <h4>Trivia Score</h4>
     <p>Level : {{ level }}</p>
-    <p>Score : {{ score }}</p>
-    <p>{{ correct }}/{{ total }} questions were answered correct</p>
+    <p>Score : <strong>{{ score }} points</strong></p>
+    <p>
+        <span class="text-{% if perc > 0.7 %}success{% elif perc < 0.4 %}danger{% else %}warning{% endif %}">
+        <strong>{{ correct }}</strong>
+        </span>
+        out of {{ total }} questions were answered correct
+    </p>
     <ul style="list-style-type: decimal">
         {% for q in queries %}
-            <li>
-                <p>{{ q.question.content }}</p>
-                {{ q.question.correct_choice }} == {{ q.selected }}
+            <li style="margin-bottom: 10px;padding: 5px;">
+                <p>{{ q.question }}</p>
+                {% if q.question.correct_choice == q.selected %}
+                    <span class="text-success">{{ q.question.correct_choice }}</span>
+                    <i class="glyphicon-ok"></i>
+                {% else %}
+                    <span class="text-danger">{{ q.selected }}</span>
+                    <i class="glyphicon-ok"></i>
+                    <span>{{ q.question.correct_choice }}</span>
+                {% endif %}
             </li>
         {% endfor %}
     </ul>
+    {% if not user.is_authenticated %}
+        <p class="alert alert-info">You are not logged in. Your score has not been saved</p>
+    {% endif %}
 {% endblock %}

@@ -5,13 +5,13 @@
         <caption>Question Levels</caption>
         <thead>
         <tr>
-            <th>Name</th>
+            <th>Name</th><th>Points</th>
         </tr>
         </thead>
         <tbody>
         {% for l in levels %}
             <tr>
-                <td>{{ l.name }}</td>
+                <td>{{ l.name }}</td><td>{{ l.points }}</td>
             </tr>
         {% endfor %}
         </tbody>

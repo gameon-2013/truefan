@@ -1,7 +1,7 @@
 __author__ = 'mbacho'
 
 from django.db import models
-from twyauth.models import User
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -38,7 +38,7 @@ class Question(models.Model):
         return self.content
 
 class UserPoints(models.Model):
-    user = models.ForeignKey(User)
+    user = models.OneToOneField(User)
     points = models.PositiveIntegerField(default=0)
 
     def __unicode__(self):

@@ -40,9 +40,9 @@
     { "model": "trivia.Choice", "pk": 31, "fields": { "content": "England", "category": 6 }},
     { "model": "trivia.Choice", "pk": 32, "fields": { "content": "South Africa", "category": 6 }},
 
-    { "model": "trivia.QuestionLevel", "pk": 1, "fields": { "name": "easy" }},
-    { "model": "trivia.QuestionLevel", "pk": 2, "fields": { "name": "medium" }},
-    { "model": "trivia.QuestionLevel", "pk": 3, "fields": { "name": "hard" }},
+    { "model": "trivia.QuestionLevel", "pk": 1, "fields": { "name": "easy" , "points": 3 }},
+    { "model": "trivia.QuestionLevel", "pk": 2, "fields": { "name": "medium" ,"points": 5 }},
+    { "model": "trivia.QuestionLevel", "pk": 3, "fields": { "name": "hard" , "points": 7}},
 
     {
         "model": "trivia.Question",
