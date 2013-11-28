@@ -58,6 +58,8 @@ def score(request, level):
         except:
             userscore = UserPoints(user=user)
         userscore.points += total_score
+        userscore.correct_questions += total_correct
+        userscore.questions_solved += total_questions
         userscore.save()
     return render_to_response('trivia/score.html', {
         'correct': total_correct, 'total': total_questions,

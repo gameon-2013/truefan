@@ -97,43 +97,43 @@ class RugbyTweet(models.Model):
     def __str__(self):
         return self.text + ": "+self.matches
 
-class Truefan_stats(models.Model):
+class Truefan_stats(object):
 
-    def __init__(self, profile_id):
-        self.profile_id = profile_id
-
-    def get_tweets(self):
-        """
-            get all tweets for a particular user
-        """
-        return RugbyTweet.objects.filter(profile_id=self.profile_id)
-
-    def tweets_stats(self):
+    def tweets_points(self, profile_id):
         """
             calculate the stats of rugby related & non-related
             tweets
         """
-        all_tweets = self.get_tweets()
+        #import pdb
+        #pdb.set_trace()
+        all_tweets = RugbyTweet.objects.filter(profile=profile_id)
         tweets_count = len(all_tweets)
         rating_points = self.point_checker(len(all_tweets))
 
         from decimal import Decimal
-        sum_points = 0
-        for i in all_tweets:
-            sum_points += i.confidence * Decimal(self.point_checker(sum_points))
+        try:
+            sum_points = 0
+            for i in all_tweets:
+                sum_points += i.confidence * Decimal(self.point_checker(sum_points))
+        except Exception, e:
+            pass
+
         return sum_points
 
 
-    def rugby_tweets_stats(self):
+    def rugby_tweets_stats(self, profile_id):
         """
             ruj tweets/total no of tweets
         """
-        from pprint import pprint
-        rugbyTweet = RugbyTweet.objects.filter(profile_id=self.profile_id)
-        pulled_tweets = TwitterProfile.objects.get(user_id=self.profile_id)
+        rugbyTweet = RugbyTweet.objects.filter(profile_id=profile_id)
+        pulled_tweets = TwitterProfile.objects.get(user_id=profile_id)
 
-        rugby_related_tweets = len(rugbyTweet)
-        non_rugby_related_tweets = pulled_tweets.total_tweets_pulled - len(rugbyTweet)
+        rugby_related_tweets = non_rugby_related_tweets = 0
+        try:
+            rugby_related_tweets = len(rugbyTweet)
+            non_rugby_related_tweets = pulled_tweets.total_tweets_pulled - len(rugbyTweet)
+        except Exception, e:
+            pass
 
         return {"rugby_related_tweets": rugby_related_tweets,
                 "non_rugby_related_tweets": non_rugby_related_tweets}

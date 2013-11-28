@@ -39,8 +39,8 @@
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
           ['Description', 'Percentage'],
-          ['Correct',  60],
-          ['Not Correct', 40]
+          ['Correct',  {{ correct_trivia_questions }}],
+          ['Not Correct', {{ incorrect_trivia_questions }}]
         ]);
 
         var options = {

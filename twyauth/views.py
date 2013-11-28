@@ -9,7 +9,7 @@ from django.core.urlresolvers import reverse
 from requests.exceptions import ConnectionError
 
 from twython import Twython
-
+from trivia.models import UserPoints
 from tasks import analyze_profile_tweets
 
 # If you've got your own Profile setup, see the note in the models file
@@ -195,22 +195,31 @@ def stats(request):
     #show statistics
 
     from twyauth.models import Truefan_stats
-    stats = Truefan_stats(request.user.id)
+    stats = Truefan_stats()
 
-    #my tweets section
-    tweets = stats.rugby_tweets_stats()
-    from pprint import pprint
-    pprint(tweets)
-
-    #my trivia section
+    #my aggregate truefanship section
     
 
+    #my tweets section
+    tweets = stats.rugby_tweets_stats(request.user.id)
+    from pprint import pprint
+
+    #my trivia section
+    correct_questions = incorrect_questions = 0
+    try:
+        user_points = UserPoints.objects.get(user=request.user)
+        correct_questions = user_points.correct_questions
+        incorrect_questions = user_points.questions_solved - correct_questions
+    except Exception, ex:
+        pass
+
     #points earned
-    points = Truefan_stats(request.user.id)
-    points_earned = points.tweets_stats()
+    points_earned = stats.tweets_points(request.user.id)
 
     return render_to_response('twyauth/stats.html',
                               {'rugby_related_tweets': tweets['rugby_related_tweets'],
-                               'non_rugby_related_tweets': tweets['non_rugby_related_tweets']})
+                               'non_rugby_related_tweets': tweets['non_rugby_related_tweets'],
+                               'correct_trivia_questions': correct_questions,
+                               'incorrect_trivia_questions': incorrect_questions})
 
 
