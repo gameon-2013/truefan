@@ -17,11 +17,11 @@
                 <p>{{ q.question }}</p>
                 {% if q.question.correct_choice == q.selected %}
                     <span class="text-success">{{ q.question.correct_choice }}</span>
-                    <i class="glyphicon-ok"></i>
+                    <span class="glyphicon glyphicon-ok"></span>
                 {% else %}
                     <span class="text-danger">{{ q.selected }}</span>
-                    <i class="glyphicon-ok"></i>
-                    <span>{{ q.question.correct_choice }}</span>
+                    <span class="glyphicon glyphicon-remove"></span>
+                    <span class="text-success">{{ q.question.correct_choice }}</span>
                 {% endif %}
             </li>
         {% endfor %}

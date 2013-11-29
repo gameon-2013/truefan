@@ -90,10 +90,10 @@
 
 
 {% block nav %}
-		  <li class="active"><a href="#">Tweets</a></li>
-      <li><a href="{% url 'stats' %}">Statistics</a></li>
-      <li><a href="{% url 'trivia' %}">Trivia</a></li>
-      <li><a href="{% url 'twitter_logout' %}">Logout</a></li>
+    <li><a href="#">Tweets</a></li>
+    <li class="active"><a href="{% url 'stats' %}">Statistics</a></li>
+    <li><a href="{% url 'trivia' %}">Trivia</a></li>
+    <li><a href="{% url 'twitter_logout' %}">Logout</a></li>
 {%endblock nav%}
 
 {% block body %}

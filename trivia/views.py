@@ -37,6 +37,7 @@ def get_queries(form):
 
 
 def score(request, level):
+    #TODO remove error allowing user to save multiple times using browser refresh
     if request.method != "POST":
         return HttpResponseRedirect('play')
 
