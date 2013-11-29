@@ -209,18 +209,17 @@ def stats(request):
 
     #my trivia section
     correct_questions = incorrect_questions = 0
+    try_trivia = 'none'
+    hide_trivia_chart = 'block'
     try:
         user_points = UserPoints.objects.get(user=request.user)
         correct_questions = user_points.correct_questions
         incorrect_questions = user_points.questions_solved - correct_questions
+        if correct_questions <= 0 and user_points.questions_solved <= 0:
+            try_trivia = 'block'
+            hide_trivia_chart = 'none'
     except Exception, ex:
         pass
-
-    try_trivia = 'none'
-    hide_trivia_chart = 'block'
-    if correct_questions <= 0 and user_points.questions_solved <= 0:
-        try_trivia = 'block'
-        hide_trivia_chart = 'none'
 
 
     #points earned

@@ -132,6 +132,7 @@ class Truefan_stats(object):
         try:
             rugby_related_tweets = len(rugbyTweet)
             non_rugby_related_tweets = pulled_tweets.total_tweets_pulled - len(rugbyTweet)
+            non_rugby_related_tweets = 0 if non_rugby_related_tweets < 0 else non_rugby_related_tweets
         except Exception, e:
             pass
 
