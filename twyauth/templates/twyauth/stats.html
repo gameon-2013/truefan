@@ -90,7 +90,7 @@
 
 
 {% block nav %}
-    <li><a href="#">Tweets</a></li>
+    <li><a href="{% url 'twitter_timeline' %}">Tweets</a></li>
     <li class="active"><a href="{% url 'stats' %}">Statistics</a></li>
     <li><a href="{% url 'trivia' %}">Trivia</a></li>
     <li><a href="{% url 'twitter_logout' %}">Logout</a></li>
