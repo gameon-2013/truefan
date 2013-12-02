@@ -113,9 +113,9 @@
 <hr />
 
 <h3>My Trivia </h3>
-<div id="trivia" style="width: 500px; height: 300px; display: {{ hide_trivia_chart }}"></div>
+<div id="trivia" style="width: 500px; height: 300px; display: {% if correct_trivia_questions <= 0 and questions_solved <= 0 %}none{% else %}block{% endif %}"></div>
 
-<div id="no_trivia_points" style="display: {{ try_trivia }} ">
+<div id="no_trivia_points" style="display: {% if correct_trivia_questions <= 0 and questions_solved <= 0 %}block{% else %}none{% endif %} ">
     seems like you haven't checked out our trivia!
 {#      <h4><a href="{% url 'trivia' %}">try trivia</a></h4>#}
     <p>

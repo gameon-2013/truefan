@@ -208,16 +208,12 @@ def stats(request):
     from pprint import pprint
 
     #my trivia section
-    correct_questions = incorrect_questions = 0
-    try_trivia = 'none'
-    hide_trivia_chart = 'block'
+    correct_questions = incorrect_questions = questions_solved = 0
     try:
         user_points = UserPoints.objects.get(user=request.user)
         correct_questions = user_points.correct_questions
-        incorrect_questions = user_points.questions_solved - correct_questions
-        if correct_questions <= 0 and user_points.questions_solved <= 0:
-            try_trivia = 'block'
-            hide_trivia_chart = 'none'
+        questions_solved = user_points.questions_solved
+        incorrect_questions = questions_solved - correct_questions
     except Exception, ex:
         pass
 
@@ -230,7 +226,6 @@ def stats(request):
                                'non_rugby_related_tweets': tweets['non_rugby_related_tweets'],
                                'correct_trivia_questions': correct_questions,
                                'incorrect_trivia_questions': incorrect_questions,
-                               'try_trivia' : try_trivia,
-                               'hide_trivia_chart': hide_trivia_chart})
+                               'questions_solved': questions_solved})
 
 
