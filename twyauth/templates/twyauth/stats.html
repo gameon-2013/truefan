@@ -14,7 +14,7 @@
         ]);
 
         var options = {
-          title: 'My Tweets',
+          /*title: 'My Tweets',*/
           is3D: true,
           titleTextStyle: { 
               color: '#3498db',
@@ -95,28 +95,16 @@
     <li><a href="{% url 'trivia' %}">Trivia</a></li>
     <li><a href="{% url 'twitter_logout' %}">Logout</a></li>
 {%endblock nav%}
-
 {% block body %}
 
-<h3>My Aggregate Truefanship: 60% </h3>
-
-<div id='chart_div' style="margin-left:100px;"></div>
-
-<hr />
-
+<h3> My Tweets </h3>
 <div id="tweets" style="width: 500px; height: 300px;"></div> 
 
-<hr />
-
-<h3>Frequency of rugby related tweets: 2 days </h3>
-
-<hr />
-
-<h3>My Trivia </h3>
+<h3> My Trivia </h3>
 <div id="trivia" style="width: 500px; height: 300px; display: {% if correct_trivia_questions <= 0 and questions_solved <= 0 %}none{% else %}block{% endif %}"></div>
 
 <div id="no_trivia_points" style="display: {% if correct_trivia_questions <= 0 and questions_solved <= 0 %}block{% else %}none{% endif %} ">
-    seems like you haven't checked out our trivia!
+    <i>Seems like you haven't checked out our trivia!</i> <br /> <br />
 {#      <h4><a href="{% url 'trivia' %}">try trivia</a></h4>#}
     <p>
         <a class="btn btn-lg btn-success" id="try_trivia" href="{% url 'trivia' %}">Try Trivia</a>
@@ -126,7 +114,7 @@
 
 <hr />
 
-<h3>My Badges: </h3>
+<h3>My Badges </h3>
 
 <img src="/static/badges/hot.png" />
 <img src="/static/badges/feather.png" />
@@ -134,4 +122,5 @@
 <img src="/static/badges/twitter.png" />
 <img src="/static/badges/key.png" />
 
+<br /> <br /> <br />
 {% endblock body %}
