@@ -17,14 +17,15 @@ from forms import QuestionForm
 from forms import ChoiceForm
 from forms import ChoiceCategoryForm
 from forms import TriviaForm
-
+from models import OpenTrivia
 
 def get_queries(form):
-    data = form.data
+    data = form.data.copy()
+    data.pop('trivia')
     query_ids = [i[i.index('_') + 1:] for i in data.keys()]
     val_ids = [int(i) for i in data.values()]
     queries = []
-    l = len(form.data)
+    l = len(data)
     for i in range(0, l, 1):
         q = Question.objects.get(id=int(query_ids[i]))
         obj = {'question': q, 'correct': q.correct_choice_id == val_ids[i]}
@@ -41,9 +42,16 @@ def score(request, level):
     if request.method != "POST":
         return HttpResponseRedirect('play')
 
-    frm = TriviaForm(request.POST or None)
+    frm = TriviaForm(request.POST)
     if not frm.is_valid():
         return render_to_response('trivia/trivia.html', {'trivia_frm': frm,'user':request.user})
+    is_saved = True
+    try:
+        o = OpenTrivia.objects.get(trivia_hash=frm.data['trivia'])
+        o.delete()
+        is_saved = False
+    except:
+        pass
 
     queries = get_queries(frm)
     total_correct = reduce(lambda x, y: x + (1 if y['correct'] else 0), queries, 0)
@@ -52,7 +60,7 @@ def score(request, level):
     total_questions = len(queries)
 
     user = request.user
-    if user.is_authenticated():
+    if user.is_authenticated() and not is_saved:
         userscore = None
         try:
             userscore = UserPoints.objects.get(user=user)
@@ -88,8 +96,10 @@ def play(request, level=None):
             obj = {'question': i, 'choices': choice_cats, 'choice_qry': choice_qry, 'selected': None}
             query_choices.append(obj)
 
+        opentrivia = OpenTrivia(user=request.user, trivia_hash=OpenTrivia.gen_hash())
+        opentrivia.save()
         frm = TriviaForm()
-        frm.setup_queries(query_choices)
+        frm.setup_queries(query_choices,opentrivia=opentrivia)
         return render_to_response('trivia/trivia.html',
                                   {'level': level, 'questions': query_choices,'len':len(query_choices),
                                    'user':request.user, 'active_tab': 'play', 'trivia_form': frm})

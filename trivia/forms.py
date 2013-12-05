@@ -4,7 +4,8 @@ from models import ChoiceCategory
 from models import Choice
 from models import Question
 from models import QuestionLevel
-
+from models import OpenTrivia
+from django.contrib.auth.models import User
 
 class QuestionForm(forms.ModelForm):
     class Meta:
@@ -27,9 +28,12 @@ class ChoiceCategoryForm(forms.ModelForm):
 
 
 class TriviaForm(forms.Form):
-    def setup_queries(self,queries):
+
+    def setup_queries(self,queries,opentrivia):
         if queries is None:
             raise Exception("queries not specified")
+        hsh = opentrivia.trivia_hash
+        self.fields['trivia'] = forms.CharField(max_length=40, label='trivia', initial=hsh, required=True)
 
         for i in queries:
             q_id = i['question'].id

@@ -9,6 +9,7 @@
         {% if questions %}
             {% if len > 0 %}
                 <form action="{% url 'score' level %}" method="post">
+                <input type="hidden" name="trivia" value="{{ trivia_form.trivia.value }}" />
                     <ul style="list-style-type: decimal">
                         {% for q in questions %}
                             <li>
